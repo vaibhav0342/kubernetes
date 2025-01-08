@@ -1,0 +1,2962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Vaibhav Upare">
+    <meta name="description" content="Mastering DevOps with Kubernetes">
+    <title>Mastering DevOps with Kubernetes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        header {
+            background: #007acc;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        header h2 {
+            margin: 10px 0 0;
+            font-size: 1.2em;
+            font-weight: lighter;
+        }
+        nav {
+            background: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .chapter-title {
+            color: #007acc;
+            margin-top: 20px;
+        }
+        ul {
+            margin: 10px 0 20px 20px;
+        }
+        footer {
+            text-align: center;
+            background: #007acc;
+            color: white;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Mastering DevOps with Kubernetes</h1>
+        <h2>Your Complete Guide to Modern Infrastructure Automation</h2>
+    </header>
+
+    <nav>
+        <a href="#author">Author</a>
+        <a href="#toc">Table of Contents</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="container" id="author">
+      <h2 class="chapter-title">About the Author</h2>
+      <p><strong>Vaibhav Upare</strong> is a DevOps Engineer with a passion for building scalable, secure, and highly available infrastructure. He is an advocate of modern infrastructure automation and cloud-native technologies, focusing on streamlining processes and optimizing system performance.</p>
+      <p>Outside of technology, Vaibhav enjoys playing guitar and reading books on various subjects, including technology and entrepreneurship. He is always eager to learn and share knowledge with others in the tech community.</p>
+      <p>Feel free to connect with Vaibhav for further discussions on DevOps, Kubernetes, or cloud technologies!</p>
+  </div>
+    <div class="container">
+        <h2 class="index-title">Index</h2>
+        <ul class="index-list">
+            <li><a href="#toc">Chapter 1: Introduction to DevOps and Kubernetes</a></li>
+            <li><a href="#chapter2">Chapter 2: Setting Up Kubernetes for DevOps</a></li>
+            <li><a href="#chapter3">Chapter 3: Containerization with Docker</a></li>
+            <li><a href="#chapter4">Chapter 4: Core Kubernetes Concepts for DevOps</a></li>
+            <li><a href="#chapter5">Chapter 5: Advanced Kubernetes for DevOps</a></li>
+            <li><a href="#chapter6">Chapter 6: Kubernetes Cluster Networking  for DevOps</li>
+            <li><a href="#chapter7">Chapter 7: Kubernetes Volumes</a></li>
+            <li><a href="#chapter8">Chapter 8: Kubernetes Stateful Workloads</a></li>
+            <li><a href="#chapter9">Chapter 9: Kubernetes Deployment Strategies</a></li>
+            <li><a href="#chapter10">Chapter 10: Kubernetes Batch Processing for DevOps</a></li>
+            <li><a href="#chapter11">Chapter 11: Security in Kubernetes</a></li>
+            <li><a href="#chapter12">Chapter 12: Advanced Kubernetes Security</a></li>
+            <li><a href="#chapter13">Chapter 13: Advanced Kubernetes Concepts</a></li>
+            <li><a href="#chapter14">Chapter 14: CI/CD Pipelines with Kubernetes</a></li>
+            <li><a href="#chapter15">Chapter 15: Observability and Monitoring</a></li>
+            <li><a href="#chapter16">Chapter 16: Kubernetes in Production</a></li>
+        </ul>
+    </div>
+    <div class="container">
+        <h2 id="toc" class="chapter-title">Table of Contents</h2>
+        <ol>
+            <li><strong>Introduction to DevOps and Kubernetes</strong>
+                <ul>
+                    <li>What is DevOps?</li>
+                    <li>Principles and Practices</li>
+                    <li>Benefits of Adopting DevOps</li>
+                    <li>Introduction to Kubernetes</li>
+                    <li>History and Evolution</li>
+                    <li>Importance of Kubernetes in DevOps</li>
+                    <li>Overview of Kubernetes Architecture</li>
+                </ul>
+            </li>
+            <li><strong>Setting Up Kubernetes for DevOps</strong>
+                <ul>
+                    <li>Installing Kubernetes</li>
+                    <li>Local Setups (e.g., Minikube, kind)</li>
+                    <li>Cloud Providers (AWS, Azure, GCP)</li>
+                </ul>
+            </li>
+            <li><strong>Containerization with Docker</strong>
+                <ul>
+                    <li>Understanding Containers</li>
+                    <li>Why Docker?</li>
+                    <li>Creating Docker Images</li>
+                    <li>Integrating Docker with Kubernetes</li>
+                    <li>Deploying Dockerized Applications on Kubernetes</li>
+                </ul>
+            </li>
+            <li><strong>Core Kubernetes Concepts for DevOps</strong>
+                <ul>
+                    <li>Understanding Pods and their role in Kubernetes</li>
+                    <li>Namespaces: Organizing Pods and resources using namespaces in Kubernetes.</li>
+                    <li>Labels and Selectors: Associating Pods and resources</li>
+                    <li>Replication Controllers and ReplicaSets: Ensuring desired Pod counts</li>
+                    <li>Deployments: Managing updates and rollbacks efficiently</li>
+                </ul>
+            </li>
+            <li><strong>Advanced Kubernetes for DevOps</strong>
+                <ul>
+                    <li>Scaling and Auto-Scaling</li>
+                    <li>Horizontal Pod Autoscaler (HPA)</li>
+                    <li>Vertical Pod Autoscaler (VPA)</li>
+                    <li>Rolling Updates and Rollbacks</li>                   
+                </ul>
+            </li>
+            <li><strong> Kubernetes Cluster Networking  for DevOps</strong>
+                <ul>
+                    <li>ClusterIP: Internal communication within the cluster</li>
+                    <li>NodePort: Exposing services on specific nodes</li>
+                    <li>LoadBalancer: Managing traffic across multiple nodes</li>
+                    <li>Kube-Proxy Configuration</li>
+                    <li>Kubernetes DNS Resolving</li>
+                </ul>
+            </li>
+            <li><strong>Kubernetes Volumes</strong>
+                        <ul>  
+                            <li>Volume Access Modes</li>
+                            <li>Reclaim Policy</li>
+                            <li>emptyDir Volume - Temporary Storage</li>
+                            <li>hostPath Volume</li>
+                            <li>Mounting EBS Volume</li>
+                            <li>Using NFS Volume</li>
+                            <li>Persistent Volume (PV) and Persistent Volume Claim (PVC)</li>
+                            <li>Storage Class</li>
+                            <li>Resource Quotas and Limit Range</li>
+                        </ul>
+            </li>   
+            <li><strong> Kubernetes Stateful Workloads</strong>
+                <ul>
+                    <li>StatefulSets: Managing stateful applications</li>
+                    <li>DaemonSets: Running Pods on every node in the cluster</li>
+                </ul>
+            </li>
+            <li><strong> Kubernetes Deployment Strategies</strong>
+                <ul>
+                    <li>Rolling Deployment: Gradual Updates with Minimal Downtime</li>
+                    <li>Canary Deployment, Blue-Green, Red-Black: Gradual Traffic Shifting</li>
+                    <li>Recreate Deployment: Terminating Pods before Creating New Ones</li>
+                </ul>
+            </li>
+            <li><strong> Kubernetes Batch Processing for DevOps</strong>
+                <ul>
+                    <li>Jobs: Running finite tasks</li>
+                    <li>CronJobs: Scheduling recurring tasks</li>
+                </ul>
+            </li>
+            <li><strong>Security in Kubernetes</strong>
+                <ul>
+                    <li>Kubernetes RBAC and Access Control</li>
+                    <LI>Service Account in Kubernetes</LI>
+                    <li>Securing Secrets and ConfigMaps</li>
+                    <li>Best Practices for Securing Clusters</li>
+                </ul>
+                <li><strong>Advanced Kubernetes Security</strong>
+                  <ul>
+                    <li>Implementing Kubernetes Auditing</li>
+                    <li>Configuring Security Contexts</li>
+                    <li>Managing Sealed Secrets</li>
+                    <li>Encrypting Secrets in etcd</li>
+                  </ul>
+                </li>
+                <li><strong>Advanced Kubernetes Concepts</strong> 
+                  <ul>
+                    <li>Static Pods</li>
+                    <li>Pause Containers</li>
+                    <li>Init Containers</li>
+                    <li>Sidecar Containers</li>
+                    <li>Taints and Tolerations</li>
+                    <li>Kubernetes Probes</li>
+                  </ul>
+                </li>                              
+            <li><strong>CI/CD Pipelines with Kubernetes</strong>
+                <ul>
+                    <li>Building CI/CD Pipelines</li>
+                    <li>Integrating Jenkins, GitLab CI/CD, or GitHub Actions</li>
+                    <li>Automating Deployments Using Helm</li>
+                    <li>Managing Configurations with Kustomize</li>
+                </ul>
+            </li>
+            <li><strong>Observability and Monitoring</strong>
+                <ul>
+                    <li>Logging and Metrics Collection</li>
+                    <li>Using Prometheus and Grafana for Monitoring</li>
+                    <li>Debugging and Troubleshooting</li>
+                </ul>
+            </li>
+            <li><strong>Kubernetes in Production</strong>
+              <ul>
+                  <li>High Availability and Disaster Recovery</li>
+                  <li>Cost Optimization</li>                                  
+              </ul>
+          </li>
+        </ol>
+    </div>
+    
+ <div class="container">
+        <h2 id="toc" class="chapter-title">Chapter 1: Introduction to DevOps and Kubernetes</h2>
+
+        <h3>What is DevOps?</h3>
+        <p>DevOps is a cultural and professional movement that emphasizes collaboration between software developers (Dev) and IT operations (Ops). The goal is to shorten the development lifecycle while delivering features, fixes, and updates frequently in close alignment with business objectives.</p>
+
+        <h3>Principles and Practices</h3>
+        <ul>
+            <li><strong>Collaboration</strong>: Enhancing communication between development and operations teams.</li>
+            <li><strong>Automation</strong>: Automating repetitive tasks to improve efficiency and reduce errors.</li>
+            <li><strong>Continuous Integration/Continuous Deployment (CI/CD)</strong>: Frequent integration of code changes and automated deployments to ensure quick delivery of features.</li>
+            <li><strong>Monitoring and Feedback</strong>: Implementing tools to monitor applications and infrastructure, allowing teams to react swiftly to issues.</li>
+        </ul>
+
+        <h3>Benefits of Adopting DevOps</h3>
+        <ul>
+            <li><strong>Faster Time to Market</strong>: Accelerated software delivery through streamlined processes.</li>
+            <li><strong>Improved Collaboration</strong>: Breaking down silos between teams fosters better communication and shared responsibilities.</li>
+            <li><strong>Enhanced Quality</strong>: Continuous testing and integration improve the quality of software.</li>
+            <li><strong>Greater Efficiency</strong>: Automation reduces manual work, allowing teams to focus on higher-value tasks.</li>
+        </ul>
+
+        <h3>Introduction to Kubernetes</h3>
+        <p>Kubernetes is an open-source platform designed to automate deploying, scaling, and operating application containers. It provides a framework to run distributed systems resiliently, managing the complexities of containerized applications.</p>
+
+        <h3>History and Evolution</h3>
+        <p>Kubernetes originated from Google’s internal system called Borg, which managed containerized applications. It was open-sourced in 2014 and has since become the de facto standard for container orchestration.</p>
+
+        <h3>Importance of Kubernetes in DevOps</h3>
+        <p>Kubernetes plays a crucial role in DevOps by enabling teams to manage applications in a scalable and efficient manner. Its ability to orchestrate containerized applications aligns perfectly with the DevOps principles of automation and continuous delivery.</p>
+
+        <h3>Comparison Between Kubernetes and Docker Swarm</h3>
+        <table border="1" cellpadding="10" style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <th>Feature</th>
+                <th>Kubernetes</th>
+                <th>Docker Swarm</th>
+            </tr>
+            <tr>
+                <td>Installation & Cluster Configuration</td>
+                <td>Complicated & Time-Consuming</td>
+                <td>Fast & Easy</td>
+            </tr>
+            <tr>
+                <td>Supported Containers</td>
+                <td>Works with all types (e.g., Rocket, Docker)</td>
+                <td>Works only with Docker</td>
+            </tr>
+            <tr>
+                <td>GUI</td>
+                <td>Available</td>
+                <td>Not Available</td>
+            </tr>
+            <tr>
+                <td>Data Volumes</td>
+                <td>Shared within the same Pod</td>
+                <td>Shared with any container</td>
+            </tr>
+            <tr>
+                <td>Autoscaling</td>
+                <td>Available</td>
+                <td>Not Available</td>
+            </tr>
+            <tr>
+                <td>Monitoring</td>
+                <td>Inbuilt tools</td>
+                <td>Requires 3rd-party tools</td>
+            </tr>
+        </table>
+        <h3>High-Level Kubernetes Architecture</h3>
+        <h3>Working with Kubernetes</h3>
+        <ol>
+            <li>Create manifest files for Kubernetes objects (JSON/YAML).</li>
+            <li>Apply these files to the cluster via the master node to bring the system to the desired state.</li>
+            <li>Pods run on worker nodes and are controlled by the master node.</li>
+        </ol>
+        <h3>Components of the Master Plane</h3>
+        <ul>
+            <li><strong>API Server</strong>: Frontend interface that processes requests and updates cluster state.</li>
+            <li><strong>ETCD</strong>: Key-value store for cluster data; ensures high availability and consistency.</li>
+            <li><strong>Kube Scheduler</strong>: Assigns pods to nodes based on resource availability.</li>
+            <li><strong>Controller Manager</strong>: Ensures actual state matches desired state (e.g., node, route, service, volume controllers).</li>
+        </ul>
+
+        <h3>Components of the Worker Node</h3>
+        <ul>
+            <li><strong>Kube Proxy</strong>: Manages networking and allocates IP addresses to pods.</li>
+            <li><strong>Kubelet</strong>: Communicates with the master node to manage pod lifecycle.</li>
+            <li><strong>Pods</strong>: Smallest deployable units in Kubernetes; contain one or more containers.</li>
+            <li><strong>Container Engine</strong>: Handles container runtime (e.g., Docker, Containerd).</li>
+        </ul>
+    </div>
+    <div class="container">
+        <h2 id="toc" class="chapter-title">Chapter 2: Setting Up Kubernetes for DevOps</h2>
+
+        <h3>Installing Kubernetes</h3>
+        <p>To get started with Kubernetes, you can choose from various installation methods, depending on your environment and requirements.</p>
+
+        <h3>Local Setups (e.g., Minikube, kind)</h3>
+        <ul>
+            <li><strong>Minikube</strong>: A tool that creates a local Kubernetes cluster on your machine. Ideal for development and testing.</li>
+            <li><strong>kind</strong>: A tool for running Kubernetes clusters in Docker containers, suitable for testing Kubernetes itself.</li>
+        </ul>
+
+        <h3>Cloud Providers (AWS, Azure, GCP)</h3>
+        <p>Cloud providers offer managed Kubernetes services that simplify the deployment and management of Kubernetes clusters:</p>
+        <ul>
+            <li><strong>Amazon EKS</strong>: Elastic Kubernetes Service for AWS.</li>
+            <li><strong>Azure AKS</strong>: Azure Kubernetes Service for Microsoft Azure.</li>
+            <li><strong>Google GKE</strong>: Google Kubernetes Engine for GCP.</li>
+        </ul>
+
+        <h3>Steps for Installing Kubernetes</h3>
+        <ol>
+            <li>Choose your preferred installation method (local or cloud provider).</li>
+            <li>Install the Kubernetes CLI tools (e.g., kubectl).</li>
+            <li>Set up your cluster using the selected tool or service.</li>
+            <li>Verify your installation by running <code>kubectl get nodes</code>.</li>
+        </ol>
+
+    </div>
+    <div class="container">
+        <h2 id="toc"  class="chapter-title">Chapter 3: Containerization with Docker</h2>
+
+        <h3>Understanding Containers</h3>
+        <p>Containers are lightweight, portable units that package an application and its dependencies, ensuring consistency across different environments.</p>
+
+        <h3>Why Docker?</h3>
+        <p>Docker is the most widely used containerization platform, offering:</p>
+        <ul>
+            <li><strong>Portability</strong>: Run containers on any system with Docker installed.</li>
+            <li><strong>Isolation</strong>: Each container runs in its own environment, avoiding conflicts.</li>
+            <li><strong>Efficiency</strong>: Containers share the host OS kernel, reducing overhead compared to virtual machines.</li>
+        </ul>
+
+        <h3>Creating Docker Images</h3>
+        <p>A Docker image is a read-only template used to create containers. You can create an image using a <code>Dockerfile</code>, which contains instructions on how to build the image.</p>
+
+        <pre><code class="language-dockerfile">
+FROM nginx:latest
+COPY ./html /usr/share/nginx/html
+        </code></pre>
+
+        <h3>Integrating Docker with Kubernetes</h3>
+        <p>Kubernetes uses Docker images to run containers. You can define a Kubernetes deployment that specifies which Docker image to use.</p>
+
+        <h3>Deploying Dockerized Applications on Kubernetes</h3>
+        <p>To deploy a Dockerized application, you create a Kubernetes deployment manifest that describes the desired state of the application.</p>
+
+        <pre><code class="language-yaml">
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-container
+        image: my-docker-image:latest
+        </code></pre>
+    </div>
+<div class="container">
+        <h2 id="toc"  class="chapter-title">Chapter 4:Core Kubernetes Concepts for DevOps</h2>
+        <h3>Fundamental of Kubernetes Object: Pod</h3>
+        <p>A Pod is the smallest deployable unit in Kubernetes, representing a group of one or more containers with shared storage and network resources. Pods are managed and scheduled by the Kubernetes control plane.</p>
+        <ul>
+            <li>Pods remain on the node until terminated or in case of node failure.</li>
+            <li>If a node dies, the pod will also be deleted after a timeout period.</li>
+            <li>Each new pod gets a unique ID; deleted pods cannot be restarted.</li>
+            <li>Volume inside the pod is deleted along with the pod.</li>
+            <li>Controllers manage pods for autoscaling and self-healing.</li>
+        </ul>
+
+        <h3>Example of a Pod YAML File</h3>
+        <pre><code>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.14.2
+    ports:
+    - containerPort: 80
+        </code></pre>
+
+        <h3>Common Pod Management Commands</h3>
+        <ul>
+            <li><code>kubectl apply -f pod1.yml</code>: Apply a pod definition.</li>
+            <li><code>kubectl get pods</code>: List all pods.</li>
+            <li><code>kubectl describe pod &lt;pod_name&gt;</code>: Get detailed information about a pod.</li>
+            <li><code>kubectl logs &lt;pod_name&gt;</code>: View logs from a pod.</li>
+        </ul>
+
+        <div class="example">
+            <h3>Pod Example with Annotations</h3>
+            <pre><code>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  annotations:
+    description: "this is demo"
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.14.2
+    ports:
+    - containerPort: 80
+            </code></pre>
+        </div>
+
+        <div class="example">
+            <h3>Pod Example with Multiple Containers</h3>
+            <pre><code>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: container1
+    image: ubuntu
+    command: ["/bin/bash", "-c", "while true; do echo c1; sleep 5; done"]
+  - name: container2
+    image: nginx
+    ports:
+    - containerPort: 80
+            </code></pre>
+            <h3>Pod Example with Environment Variables</h3>
+        <pre><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: demo
+spec:
+  containers:
+  - name: container1
+    image: ubuntu
+    command: ["/bin/bash", "-c", "while true; do echo c1; sleep 5 ; done"]
+    env:
+    - name: myname
+      value: vaibhav</code></pre>
+
+        <h3>Create a Pod from YAML File</h3>
+        <p>If a resource with the same name already exists, the <code>create</code> command will return an error.</p>
+        <pre><code>Command: kubectl create -f filename.yaml</code></pre>
+
+        <h3>Update a Pod from YAML File</h3>
+        <p>The <code>create</code> command always creates new resources, whereas <code>apply</code> can create or update existing resources.</p>
+        <pre><code>Command: kubectl apply -f filename.yaml</code></pre>
+       
+        <h3>Approaches for Managing Resources</h3>
+        <h3>1. Imperative Management</h3>
+        <p>Imperative management involves creating Kubernetes resources directly from the command line using <code>kubectl create</code>, <code>replace</code>, or <code>delete</code>.</p>
+        
+        <h3>2. Declarative Management</h3>
+        <p>Declarative management involves defining the resource within a YAML file and applying it using <code>kubectl apply</code>.</p>
+
+        <h3>Show Logs of a Running Pod</h3>
+        <pre><code>kubectl logs -l name=myLabel  # Dump pod logs with label name=myLabel (stdout)
+kubectl logs my-pod -c my-container  # Dump pod container logs (stdout, multi-container case)
+kubectl logs -f my-pod  # Stream pod logs (stdout)
+kubectl logs -f my-pod -c my-container  # Stream pod container logs (stdout, multi-container case)
+kubectl logs -f -l name=myLabel --all-containers  # Stream all pod logs with label name=myLabel (stdout)
+kubectl logs my-pod --previous  # Dump logs of a previous instantiation of a container
+kubectl logs my-pod -c my-container --previous  # Dump container logs of a previous instantiation</code></pre>
+
+<h3>Understanding Namespaces and their Purpose</h3>
+        <p>In Kubernetes, namespaces provide a logical way to isolate resources within a single cluster. They allow you to partition cluster resources into different environments, such as development, testing, or production, providing better resource management and security for multi-tenant applications.</p>
+
+        <h3>Types of Namespaces</h3>
+        <ul>
+            <li><strong>Default Namespace:</strong> This is the default namespace where resources are created if no namespace is specified.</li>
+            <li><strong>Custom or User-defined Namespaces:</strong> These namespaces are created by users to logically organize resources for different applications or teams.</li>
+            <li><strong>kube-system:</strong> This namespace is used for system-level resources like the Kubernetes controller, API server, etcd database, and kube-proxy.</li>
+        </ul>
+
+        <h3>Working with Namespaces</h3>
+        <p>Here are some common commands for working with namespaces:</p>
+        <pre>
+kubectl -n kube-system get pods  # Get pods in the kube-system namespace
+kubectl get namespaces  # List all namespaces
+kubectl create namespace <project-1>  # Create a new namespace
+        </pre>
+
+        <h4>Example YAML File to Create a Namespace</h4>
+        <pre>
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: my-namespace
+        </pre>
+
+        <h3>Working with Pods in Different Namespaces</h3>
+        <p>By default, when you run a pod, it is created in the default namespace. You can specify a different namespace using the `-n` flag. Here are some examples:</p>
+        <pre>
+kubectl run podname --image=nginx  # Pod created in the default namespace
+kubectl get pods  # List pods in the default namespace
+kubectl -n project-1 run podname --image=nginx  # Pod created in the project-1 namespace
+kubectl -n project-1 get all  # List all resources in project-1 namespace
+kubectl -n project-1 delete deployment <deployment-name>  # Delete a deployment in project-1 namespace
+        </pre>
+<h3>Labels in Kubernetes</h3>
+    <p>Labels are key-value pairs attached to resources (such as Pods, Deployments, and Services) to organize, select, and manage them. Labels can be attached to objects at creation time.</p>
+    <ul>
+        <li>Labels are similar to tags in AWS and Git.</li>
+        <li>Labels help in filtering Kubernetes resources.</li>
+    </ul>
+    <p>Valid label value:</p>
+    <ul>
+        <li>Must be 63 characters or less (can be empty),</li>
+        <li>Unless empty, must begin and end with an alphanumeric character ([a-z0-9A-Z]),</li>
+        <li>Could contain dashes (-), underscores (_), dots (.), and alphanumeric between.</li>
+    </ul>
+
+    <h3>Examples of Imperative Label Commands</h3>
+    <ul>
+        <li><strong>Display current labels of the pod:</strong> <code>kubectl label pod my-pod --show-labels</code></li>
+        <li><strong>Add or update the label app=dev on the pod:</strong> <code>kubectl label pod my-pod app=dev</code></li>
+        <li><strong>Remove the app label from the pod:</strong> <code>kubectl label pod my-pod app-</code></li>
+    </ul>
+
+    <h3>Declarative Example</h3>
+    <pre><code>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+  labels:
+    app: dev
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.14.2
+    ports:
+    - containerPort: 80
+    </code></pre>
+
+    <h3>Deleting Objects</h3>
+    <p>There are three ways to delete an object:</p>
+    <ul>
+        <li>From a YAML file</li>
+        <li>Using <code>kubectl delete object object_name</code></li>
+        <li>Using <code>kubectl delete object -l env=dev</code> (by label)</li>
+    </ul>
+</div>
+    <h3>Selectors in Kubernetes</h3>
+    <p>Selectors are used to filter and identify a specific set of resources based on their labels. Labels are key-value pairs attached to Kubernetes resources (like pods, deployments, and services).</p>
+    
+    <h4>Types of Selectors</h4>
+    <h5>Equality-Based Selectors</h5>
+    <p>These selectors use the = or != operators to match resources with specific label values:</p>
+    <ul>
+        <li><strong>Retrieve pods with label app=myapp:</strong> <code>kubectl get pods -l app=myapp</code></li>
+        <li><strong>Retrieve pods where label env is not equal to prod:</strong> <code>kubectl get pods -l env!=prod</code></li>
+    </ul>
+
+    <h5>Set-Based Selectors</h5>
+    <p>These selectors allow matching resources based on inclusion or exclusion from a set of values, using operators like in, notin, and exists:</p>
+    <ul>
+        <li><strong>Retrieve pods with label env set to either dev or staging:</strong> <code>kubectl get pods -l 'env in (dev, staging)'</code></li>
+        <li><strong>Retrieve pods that do not have env set to prod or test:</strong> <code>kubectl get pods -l 'env notin (prod, test)'</code></li>
+        <li><strong>Retrieve pods that have the app label (regardless of the value):</strong> <code>kubectl get pods -l 'app'</code></li>
+    </ul>
+
+    <h3>Node Affinity: Choosing Where to Schedule Pods</h3>
+    <p>You can constrain a Pod to run on particular nodes using Node Affinity. There are two primary methods:</p>
+
+    <h4>Node-Selector</h4>
+    <p>Using node labels, you can specify where Kubernetes should schedule a Pod:</p>
+    <ul>
+        <li><strong>Label a node:</strong> <code>kubectl label nodes node-1 app=v1</code></li>
+        <li><strong>Display node labels:</strong> <code>kubectl get node --show-labels</code></li>
+    </ul>
+    <h5>Example of a Pod YAML with NodeSelector</h5>
+    <pre><code>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+  nodeSelector:
+    app: v1
+    </code></pre>
+
+    <h4>NodeName</h4>
+    <p>The <code>nodeName</code> field in a pod specification is used to directly assign a specific pod to a particular node.</p>
+    <h5>Example of a Pod YAML with NodeName</h5>
+    <pre><code>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+  nodeName: node0
+
+</code></pre>
+
+<h3>Replication Controller</h3>
+<p>Replication Controller in Kubernetes is a resource used to ensure a specific number of pod replicas are running at all times. If pods or nodes fail, the Replication Controller automatically replaces them to maintain the desired state.</p>
+<ul>
+    <li>Replication Controller version: V1</li>
+    <li>Supports rolling updates but cannot rollout or rollback.</li>
+    <li>Supports equality-based selectors and can only use one label for selection.</li>
+    <li><strong>Extra Point:</strong> Replication Controllers are being gradually replaced by ReplicaSets in most use cases due to additional functionality and features.</li>
+</ul>
+
+<h4>Example of a Replication Controller YAML</h4>
+<pre><code>
+apiVersion: v1
+kind: ReplicationController
+metadata:
+name: nginx-controller
+spec:
+replicas: 3
+selector:
+app: rc-pod
+template:
+metadata:
+  name: rc-pod
+  labels:
+    app: rc-pod
+spec:
+  containers:
+  - name: rc-pod
+    image: ubuntu
+    command: ["/bin/bash", "-c", "while true; do echo c1; sleep 5 ; done"]
+</code></pre>
+
+<h4>Interactive Method to Scale Replication Controller</h4>
+<p>You can scale the number of pods in a Replication Controller using the following command:</p>
+<ul>
+    <li><strong>Scale up/down number of pods:</strong> <code>kubectl scale rc nginx-controller --replicas=3</code></li>
+</ul>
+
+<h4>Deleting a Replication Controller without Cascading Deletion</h4>
+<p>To delete a Replication Controller without cascading deletion of the associated pods, use:</p>
+<ul>
+    <li><code>kubectl delete rc <replication-controller-name> --cascade=false</code></li>
+</ul>
+
+<h3>ReplicaSets</h3>
+<p>ReplicaSets are the next-generation version of Replication Controllers.</p>
+<ul>
+    <li>ReplicaSet version: apps/v1</li>
+    <li>Supports equality-based and set-based selectors.</li>
+    <li>Does not support rolling updates or rollback functionality.</li>
+    <li><strong>Extra Point:</strong> ReplicaSets are primarily used by Deployments to manage the pods and provide scaling functionality.</li>
+</ul>
+
+<h4>How a ReplicaSet Works</h4>
+<p>ReplicaSets manage pod replicas based on labels, and they ensure the desired state is maintained by recreating pods when they fail.</p>
+
+<h5>Example of a ReplicaSet YAML</h5>
+<pre><code>
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+name: frontend
+labels:
+app: book
+tier: frontend
+spec:
+replicas: 3
+selector:
+matchLabels:
+  tier: frontend
+template:
+metadata:
+  labels:
+    tier: frontend
+spec:
+  containers:
+  - name: php-redis
+    image: gcr.io/google_samples/gb-frontend:v3
+</code></pre>
+
+<h3>Deployments</h3>
+<p>Deployments manage ReplicaSets and Pods, allowing for rolling updates and rollback functionality.</p>
+<ul>
+    <li>Deployment version: apps/v1</li>
+    <li>Supports both equality-based and set-based selectors.</li>
+    <li>Supports rolling updates and rollback functionality.</li>
+    <li>Self-healing: If a pod fails or is deleted, the Deployment ensures a new pod is created to replace it.</li>
+    <li><strong>Extra Point:</strong> Deployments provide a higher-level abstraction over ReplicaSets and Pods, making management easier and more consistent.</li>
+</ul>
+
+<h4>Imperative Commands for Deployments</h4>
+<ul>
+    <li><strong>Create a Deployment:</strong> <code>kubectl create deployment my-deploy --image=nginx</code></li>
+    <li><strong>Scale a Deployment:</strong> <code>kubectl scale deployment my-deploy --replicas=3</code></li>
+    <li><strong>Get Deployments:</strong> <code>kubectl get deployments</code></li>
+    <li><strong>Delete a Deployment:</strong> <code>kubectl delete deployment my-deploy</code></li>
+</ul>
+
+<h4>Failed Deployment</h4>
+<p>Your Deployment may get stuck during deployment for several reasons, including:</p>
+<ul>
+    <li>Insufficient quota</li>
+    <li>Readiness probe failures</li>
+    <li>Image pull errors</li>
+    <li>Insufficient permissions</li>
+    <li>Limit ranges</li>
+    <li>Application runtime misconfiguration</li>
+</ul>
+
+<h5>Example of a Deployment YAML</h5>
+<pre><code>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+name: my-deployment
+labels:
+app: nginx
+spec:
+replicas: 3
+selector:
+matchLabels:
+  app: nginx
+template:
+metadata:
+  labels:
+    app: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.16.1
+    ports:
+    - containerPort: 80
+</code></pre>
+    </div>
+   <!-- Chapter 5 Content -->
+   <div class="container">
+    <h2 id="toc" class="chapter-title">Chapter 5: Advanced Kubernetes for DevOps</h2>
+
+    <h3>Scaling and Auto-Scaling</h3>
+    <p>Scaling in Kubernetes refers to increasing or decreasing the number of running Pods in a deployment. Kubernetes supports two types of auto-scaling:</p>
+    <ul>
+        <li><strong>Horizontal Pod Autoscaler (HPA)</strong>: Automatically adjusts the number of Pods based on observed CPU utilization or other select metrics.</li>
+        <li><strong>Vertical Pod Autoscaler (VPA)</strong>: Adjusts the resource requests and limits (CPU, memory) for containers in a Pod to optimize resource usage.</li>
+    </ul>
+    <p>Both types of auto-scaling help ensure applications run smoothly under varying loads and can adapt to changing demand.</p>
+
+    <h3>Horizontal Pod Autoscaler (HPA)</h3>
+    <p>The Horizontal Pod Autoscaler (HPA) automatically scales the number of Pods in a deployment, replica set, or stateful set based on observed metrics such as CPU utilization or custom metrics.</p>
+    <p><strong>Example of Setting Up HPA:</strong></p>
+    <pre>
+kubectl autoscale deployment my-deployment --min=1 --max=10 --cpu-percent=80
+    </pre>
+    <p>This command scales the my-deployment deployment from a minimum of 1 Pod to a maximum of 10 Pods based on CPU utilization, keeping it around 80% CPU.</p>
+
+    <h3>Vertical Pod Autoscaler (VPA)</h3>
+    <p>The Vertical Pod Autoscaler automatically adjusts the resource requests and limits for Pods to optimize performance. It helps avoid resource wastage by adjusting Pods based on real-time usage.</p>
+    <p><strong>Example:</strong></p>
+    <pre>
+kubectl apply -f vpa.yaml
+    </pre>
+    <p>Where vpa.yaml specifies the required resource adjustments for Pods in a deployment.</p>
+
+    <h3>Rolling Updates and Rollbacks</h3>
+    <h4>Rolling Updates</h4>
+    <p>Rolling updates allow you to update a deployment in a controlled manner, minimizing downtime by updating Pods incrementally. Kubernetes automatically manages the update process to ensure that there are no disruptions to the running application.</p>
+    <p><strong>Example: Updating a Deployment</strong></p>
+    <p>To update the image of a Deployment, follow these steps:</p>
+    <pre>
+kubectl set image deployment/my-deployment nginx=nginx:1.16.1
+    </pre>
+    <p><strong>Check the Rollout Status:</strong></p>
+    <pre>
+kubectl rollout status deployment/my-deployment
+    </pre>
+    <p><strong>Verify ReplicaSet Changes:</strong></p>
+    <pre>
+kubectl get rs
+    </pre>
+
+    <h4>Checking Rollout History of a Deployment</h4>
+    <p>You can inspect the rollout history to see previous versions of a Deployment:</p>
+    <p><strong>Check the Deployment Revisions:</strong></p>
+    <pre>
+kubectl rollout history deployment/my-deployment
+    </pre>
+    <p><strong>View Details of a Specific Revision:</strong></p>
+    <pre>
+kubectl rollout history deployment/my-deployment --revision=2
+    </pre>
+
+    <h4>Rolling Back to a Previous Revision</h4>
+    <p>If a rollout introduces an issue, you can easily roll back to a previous version.</p>
+    <p><strong>Rollback to the Previous Revision:</strong></p>
+    <pre>
+kubectl rollout undo deployment/my-deployment
+    </pre>
+    <p><strong>Alternatively, you can specify a specific revision to roll back to:</strong></p>
+    <pre>
+kubectl rollout undo deployment/my-deployment --to-revision=2
+    </pre>
+    <p><strong>Check if the Rollback Was Successful:</strong></p>
+    <pre>
+kubectl get deployment my-deployment
+    </pre>
+    <p><strong>Get Detailed Information about the Deployment:</strong></p>
+    <pre>
+kubectl describe deployment my-deployment
+    </pre>
+
+    <h3>Scaling a Deployment</h3>
+    <p>You can scale the number of Pods in a Deployment to handle increased traffic or workload.</p>
+    <p><strong>Scale a Deployment:</strong></p>
+    <pre>
+kubectl scale deployment my-deployment --replicas=10
+    </pre>
+    <p><strong>Set up Auto-Scaling: Assuming HPA is enabled, you can set up auto-scaling based on CPU usage:</strong></p>
+    <pre>
+kubectl autoscale deployment/my-deployment --min=10 --max=15 --cpu-percent=80
+    </pre>
+
+    <h4>Proportional Scaling:</h4>
+    <p>During rolling updates, Kubernetes ensures that new replicas are balanced proportionally across existing ReplicaSets, minimizing the risk of application downtime.</p>
+
+    <h3>Pausing and Resuming Rollouts</h3>
+    <p>Sometimes, you might want to pause a deployment update to make adjustments or to debug issues. Kubernetes allows you to pause and resume rollouts:</p>
+    <pre>
+kubectl rollout pause deployment/my-deployment
+    </pre>
+    <pre>
+kubectl rollout resume deployment/my-deployment
+    </pre>
+</div> 
+<div class="container">
+    <h2 id="toc" class="chapter-title">Chapter 6: Kubernetes Cluster Networking for DevOps</h2>
+
+    <p>Networking is a central part of Kubernetes, but it can be challenging to understand exactly how it is expected to work. There are 4 distinct networking problems to address:</p>
+    <ul>
+        <li><strong>Highly-coupled container-to-container communications:</strong> Solved by Pods and localhost communications.</li>
+        <li><strong>Pod-to-Pod communications:</strong></li>
+        <li><strong>Pod-to-Service communications:</strong></li>
+        <li><strong>External-to-Service communications:</strong></li>
+    </ul>
+    <h3>1. Container-to-Container Communication Inside a Pod</h3>
+    <p>In Kubernetes, containers within the same Pod can communicate via localhost. Here's an example of a Pod with two containers:</p>
+    
+    <pre><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: testpod
+spec:
+  containers:
+  - name: c0
+    image: ubuntu
+    command: ["/bin/bash", "-c", "while true; do echo Hello-sagar; sleep 5; done"]
+  - name: c1
+    image: httpd
+    ports:
+    - containerPort: 80
+</code></pre>
+
+    <h4>Commands:</h4>
+    <ul>
+        <li><code>kubectl apply -f filename.yaml</code></li>
+        <li><code>kubectl logs -f testpod -c abc</code></li>
+        <li><code>kubectl exec -it testpod -c abc /bin/bash</code></li>
+        <li><code>apt update && apt install curl</code></li>
+        <li><code>curl localhost:80</code></li>
+    </ul>
+    <p>This shows the output of the application running inside the second container.</p>
+
+    <h3>2. Pod-to-Pod Communication within the Same Node</h3>
+    <p>Pods within the same node can communicate with each other using IPs. By default, Pod IPs are not accessible outside the node.</p>
+
+    <pre><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: testpod1
+spec:
+  containers:
+  - name: v1
+    image: ubuntu
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: testpod2
+spec:
+  containers:
+  - name: v2
+    image: httpd
+    ports:
+    - containerPort: 80
+</code></pre>
+<h4>Commands:</h4>
+    <ul>
+        <li><code>kubectl apply -f filename.yaml</code></li>
+        <li><code>kubectl get all</code></li>
+        <li><code>kubectl exec -it pod/testpod1 -- /bin/bash</code></li>
+        <li><code>apt install curl</code></li>
+        <li><code>ping IPaddressOFPod2:80</code></li>
+    </ul>
+
+    <h3>ClusterIP: Internal Communication within the Cluster</h3>
+    <p>ClusterIP provides an internal IP for communication within the cluster. It's the default service type and is primarily used for communication between microservices and Pods across different nodes.</p>
+
+    <pre><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpddeployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: httpddeployment
+  template:
+    metadata:
+      labels:
+        app: httpddeployment
+    spec:
+      containers:
+      - name: c00
+        image: httpd
+        ports:
+        - containerPort: 80
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubuntudeployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ubuntudeployment
+  template:
+    metadata:
+      labels:
+        app: ubuntudeployment
+    spec:
+      containers:
+      - name: c01
+        image: ubuntu
+        command: ["/bin/bash", "-c", "while true; do echo Hello-sagar; sleep 5; done"]
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: demoservice
+spec:
+  selector:
+    app: httpddeployment
+  ports:
+  - port: 80
+    targetPort: 80
+  type: ClusterIP
+</code></pre>
+
+    <h4>Commands:</h4>
+    <ul>
+        <li><code>kubectl apply -f filename.yaml</code></li>
+        <li><code>kubectl get all</code></li>
+        <li><code>kubectl get pod -o wide</code></li>
+        <li><code>curl 172.17.0.7:80</code></li>
+        <li><code>curl clusterIP:80</code></li>
+    </ul>
+    <p>This allows communication with the ClusterIP and helps to manage dynamic Pod IP changes.</p>
+
+    <h3>NodePort: Exposing Services on Specific Nodes</h3>
+    <p>NodePort allows you to expose a service outside of your cluster. It uses NAT to expose a port on each selected node in the cluster. When you specify <code>type: NodePort</code>, Kubernetes will automatically allocate a port from the range 30000-32767 by default.</p>
+
+    <pre><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpddeployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: httpddeployment
+  template:
+    metadata:
+      labels:
+        app: httpddeployment
+    spec:
+      containers:
+      - name: c00
+        image: httpd
+        ports:
+        - containerPort: 80
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: demoservice
+spec:
+  selector:
+    app: httpddeployment
+  ports:
+  - port: 80
+    targetPort: 80
+  type: NodePort
+</code></pre>
+<h4>Commands:</h4>
+<ul>
+    <li><code>kubectl apply -f filename.yaml</code></li>
+    <li><code>kubectl get all</code></li>
+    <li><code>minikube service list</code></li>
+</ul>
+
+<p>To bind the NodePort service to a specific IP range:</p>
+
+<pre><code>apiVersion: v1
+kind: Service
+metadata:
+name: example-nodeport
+spec:
+type: NodePort
+ports:
+- port: 80
+targetPort: 8080
+nodePort: 30001
+selector:
+app: example-app
+</code></pre>
+
+<h3>LoadBalancer: Managing Traffic Across Multiple Nodes</h3>
+<p>The <code>LoadBalancer</code> service type is used to expose a service externally and distribute traffic across multiple nodes. This is especially useful in cloud environments where a cloud provider's load balancer can distribute the incoming traffic across the Kubernetes nodes.</p>
+
+<p>When you create a LoadBalancer service, Kubernetes automatically provisions a cloud provider's load balancer to route traffic to your service.</p>
+
+<h4>Example:</h4>
+<pre><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+name: webapp-deployment
+spec:
+replicas: 3
+selector:
+matchLabels:
+  app: webapp
+template:
+metadata:
+  labels:
+    app: webapp
+spec:
+  containers:
+  - name: webapp-container
+    image: nginx:latest
+    ports:
+    - containerPort: 80
+
+apiVersion: v1
+kind: Service
+metadata:
+name: webapp-service
+spec:
+selector:
+app: webapp
+ports:
+- port: 80
+targetPort: 80
+type: LoadBalancer
+</code></pre>
+
+<p>In the above example:</p>
+<ul>
+    <li>The <code>webapp-deployment</code> is deployed with three replicas, ensuring that the app runs on multiple nodes.</li>
+    <li>The <code>webapp-service</code> is of type <code>LoadBalancer</code>, which automatically provisions a load balancer (e.g., AWS ELB, GCP Load Balancer, or Azure Load Balancer) to distribute incoming traffic across the Pods of the <code>webapp-deployment</code>.</li>
+</ul>
+
+<p>Once this service is created, you can check the external IP of the LoadBalancer:</p>
+
+<pre><code>kubectl get svc webapp-service</code></pre>
+<p>The external IP will be provided by the cloud provider, and incoming traffic to that IP will be automatically load-balanced across the available Pods.</p>
+
+<h3>Headless Service: Understanding its Purpose and Benefits</h3>
+<p>A Headless Service is a type of Kubernetes Service that does not assign an IP address to the service itself. Instead, it enables direct communication with the underlying Pods without load balancing. This makes it useful for applications where each Pod needs to be directly accessible, such as stateful or clustered applications.</p>
+<p>For example, in a stateful application, each Pod might have a unique role and should be accessible by other Pods directly rather than through a load-balanced service.</p>
+
+<h3>Example: Setting Up and Testing Headless Service</h3>
+<p>Below is the setup for creating a Headless Service. Follow these steps to test it:</p>
+
+<pre>
+kubectl apply -f filename.yaml
+</pre>
+<p>Now, check the resources running in the cluster:</p>
+<pre>
+kubectl get all
+</pre>
+<p>There should be one service running, which will be of ClusterIP type but without an IP address. This is the headless service.</p>
+
+<p>Next, enter the Ubuntu Pod:</p>
+<pre>
+kubectl exec -it pod/pod_name -- /bin/bash
+</pre>
+<p>Inside the Pod, install `curl` and `nslookup` for testing:</p>
+<pre>
+apt update && apt install curl -y && apt install dnsutils -y
+</pre>
+<p>Now, test the headless service by running the following:</p>
+<pre>
+nslookup headlessservice
+</pre>
+<p>You should get the DNS entry for the service. Finally, test accessing the service:</p>
+<pre>
+curl headlessservice.default.svc.cluster.local:80
+</pre>
+
+<h4>Example YAML File for Headless Service</h4>
+<pre>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+name: httpddeployment
+spec:
+replicas: 1
+selector:
+matchLabels:
+name: httpddeployment
+template:
+metadata:
+name: testpod1
+labels:
+name: httpddeployment
+spec:
+containers:
+- name: c00
+image: httpd
+ports:
+- containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+name: ubuntudeployment
+spec:
+replicas: 1
+selector:
+matchLabels:
+name: ubuntudeployment
+template:
+metadata:
+name: testpod2
+labels:
+name: ubuntudeployment
+spec:
+containers:
+- name: c01
+image: ubuntu
+command: ["/bin/bash", "-c", "while true; do echo Hello-sagar; sleep 5 ; done"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+name: headlessservice
+spec:
+clusterIP: None
+ports:
+- port: 80        # Exposes container port
+targetPort: 80   # Redirects to Pod's port
+selector:
+name: httpddeployment  # Routes traffic to Pods with this label
+</pre>
+
+
+<h3>Kube-Proxy Configuration: Restrict NodePort Access to Specific IP Range</h3>
+
+    <p>To restrict NodePort access to a specific IP range, you'll need to update the <code>kube-proxy</code> ConfigMap and modify its configuration.</p>
+
+    <h4>Steps to Update the Kube-Proxy ConfigMap:</h4>
+
+    <ol>
+        <li><strong>Edit the Kube-Proxy ConfigMap:</strong><br>
+            Use the following command to edit the ConfigMap in the <code>kube-system</code> namespace:
+            <pre><code>kubectl -n kube-system edit configmap kube-proxy</code></pre>
+        </li>
+
+        <li><strong>Add the <code>nodePortAddresses</code> Field:</strong><br>
+            In the configuration file, add the <code>nodePortAddresses</code> field with the desired IP range. For example, restrict NodePort access to the subnet <code>192.168.1.0/24</code>:
+            <pre><code>apiVersion: kubeproxy.config.k8s.io/v1alpha1
+kind: KubeProxyConfiguration
+nodePortAddresses:
+  - 192.168.1.0/24    # Restrict NodePort to this subnet
+mode: iptables
+            </code></pre>
+        </li>
+
+        <li><strong>Apply the Updated Configuration:</strong><br>
+            After making changes to the <code>kube-proxy</code> ConfigMap, restart the <code>kube-proxy</code> daemonset to apply the changes:
+            <pre><code>kubectl -n kube-system rollout restart daemonset/kube-proxy</code></pre>
+        </li>
+
+        <li><strong>Validate NodePort Service:</strong><br>
+            Use <code>netstat</code> to verify that the service is listening only on the defined IP range (e.g., port <code>30001</code>):
+            <pre><code>netstat -tuln | grep 30001</code></pre>
+        </li>
+
+        <h3>Kubernetes DNS Resolving</h3>
+
+        <p>Kubernetes DNS enables seamless service-to-service communication within the cluster by resolving names to their corresponding IPs. The key components of Kubernetes DNS include CoreDNS (default since Kubernetes v1.12) and Kube-DNS (legacy). Services and Pods can be accessed using Fully Qualified Domain Names (FQDNs) or their simple names.</p>
+
+    <h3>DNS Record Types in Kubernetes</h3>
+    
+    <h4>1. Service DNS Records</h4>
+    <ul>
+        <li><strong>A Records:</strong>
+            <ul>
+                <li><strong>Normal Service:</strong> svc.namespace.svc.cluster.local → Resolves to ClusterIP.</li>
+                <li><strong>Headless Service:</strong> Resolves to Pod IPs, no load balancing.</li>
+            </ul>
+        </li>
+        <li><strong>CNAME Records:</strong> Points to other hostnames (useful for cross-cluster service discovery).</li>
+        <li><strong>SRV Records:</strong>
+            <ul>
+                <li>For named ports, e.g., _port._protocol.svc.namespace.svc.cluster.local.</li>
+                <li>Includes priority, weight, port, and target.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h4>2. Pod DNS Records</h4>
+    <ul>
+        <li><strong>A Records:</strong> pod-ip.namespace.pod.cluster.local → Resolves to Pod IP.</li>
+        <li><strong>Custom Hostnames/Subdomains:</strong> hostname.subdomain.namespace.svc.cluster.local if configured.</li>
+    </ul>
+
+    <h3>Combined Pod and Service YAML</h3>
+    <pre>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+  labels:
+    app: my-app
+spec:
+  containers:
+    - name: my-container
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: my-app
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30007
+    </pre>
+
+    <p><strong>Command to Apply YAML:</strong></p>
+    <pre>kubectl apply -f pod-service.yaml</pre>
+
+    <p><strong>Example Pod YAML:</strong></p>
+    <pre>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod-1
+spec:
+  containers:
+    - name: my-container
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+    </pre>
+
+    <p><strong>Commands:</strong></p>
+    <pre>
+kubectl apply -f pod.yaml
+kubectl get pods
+kubectl exec -it my-pod-1 -- /bin/bash
+curl my-service
+    </pre>
+
+    <h3>Creating Pods in Different Namespaces</h3>
+    <pre>
+kubectl run my-pod --image=nginx --restart=Never -n my-namespace
+kubectl get pods -n my-namespace
+    </pre>
+
+    <h3>Accessing the Service via its DNS Name</h3>
+    <pre>curl http://my-service.default.svc.cluster.local</pre>
+
+    <h3>Debugging DNS Resolving</h3>
+    
+    <h4>Check DNS Resolution</h4>
+    <ul>
+        <li>Use <code>nslookup:</code> <pre>kubectl exec -it &lt;pod-name&gt; -- nslookup &lt;service-name&gt;</pre></li>
+        <li>Verify <code>/etc/resolv.conf:</code> <pre>kubectl exec &lt;pod-name&gt; cat /etc/resolv.conf</pre></li>
+    </ul>
+
+    <h4>Check DNS Components</h4>
+    <ul>
+        <li><strong>DNS Pods:</strong> <pre>kubectl get pods -n kube-system</pre></li>
+        <li><strong>DNS Service:</strong> <pre>kubectl get svc kube-dns -n kube-system</pre></li>
+        <li><strong>DNS Endpoints:</strong> <pre>kubectl get ep kube-dns -n kube-system</pre></li>
+    </ul>
+    </ol>
+</div>
+<!-- Chapter 7 Content -->
+<div class="container">
+    <h2 id="chapter15" class="chapter-title">Chapter 7: Kubernetes Volume Access Modes, Reclaim Policies, and Types of Volumes</h2>
+
+    <h3>Kubernetes Volume Access Modes</h3>
+    <p>Kubernetes defines several access modes for volumes to determine how Pods can access them:</p>
+
+    <h4>1. ReadWriteOnce</h4>
+    <p>The volume can be mounted as read-write by a single node. This is useful when a volume needs to be written to by only one Pod at a time.</p>
+
+    <h4>2. ReadOnlyMany</h4>
+    <p>The volume can be mounted as read-only by many nodes. This is useful for sharing data across multiple Pods that do not require writing access.</p>
+
+    <h4>3. ReadWriteMany</h4>
+    <p>The volume can be mounted as read-write by many nodes. This is useful for sharing data across multiple Pods that need write access.</p>
+
+    <h3>Kubernetes Reclaim Policy</h3>
+    <p>A Reclaim Policy defines the behavior of a PersistentVolume (PV) after the associated PersistentVolumeClaim (PVC) is deleted. There are three main types of Reclaim Policies:</p>
+
+    <h4>1. Retain</h4>
+    <p>When the PVC is deleted, the PV is automatically detached. However, the PV is not available for reuse, and the data is not deleted automatically. You need to manually delete the data.</p>
+
+    <h4>2. Recycle</h4>
+    <p>When the PVC is deleted, the PV is automatically detached, and it becomes available for reuse. However, the data is not deleted automatically. You can delete the data manually.</p>
+
+    <h4>3. Delete</h4>
+    <p>When the PVC is deleted, the PV is automatically deleted, and the associated storage is released.</p>
+
+    <h3>emptyDir Volume - Temporary Storage</h3>
+    <p>The <code>emptyDir</code> volume provides temporary storage for Pods. The data is stored in a directory within the Pod, and when the Pod is deleted, the data in the <code>emptyDir</code> is lost.</p>
+
+    <pre>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: emptydir-example
+spec:
+  containers:
+  - name: app-container-1
+    image: nginx:alpine   
+    volumeMounts:
+    - mountPath: /data                  # Data will be stored under /data in the container
+      name: shared-storage              # The shared volume name
+  volumes:
+  - name: shared-storage
+    emptyDir: {}                         # Define emptyDir volume type
+    </pre>
+
+    <p>To interact with the emptyDir volume:</p>
+    <ul>
+        <li>Run command: <code>kubectl exec -it emptydir-example -- /bin/sh</code></li>
+        <li>Write a test file: <code>echo "This is a test file" > /data/testfile.txt</code></li>
+    </ul>
+
+    <h3>Kubernetes hostPath Volume</h3>
+    <p>The <code>hostPath</code> volume mounts a specific path from the host node into the container. This volume type is not portable, as it relies on the file system of the host machine.</p>
+
+    <pre>
+volumes:
+  - name: host-volume
+    hostPath:
+      path: /mnt/data              # Mount the /mnt/data directory from the host machine
+    </pre>
+
+    <h3>Mount EBS Volume</h3>
+    <p>EBS volumes are persistent, meaning they remain available even if the Pod is deleted. When the Pod is deleted, the volume is automatically detached from the Pod.</p>
+
+    <pre>
+volumes:
+  - name: ebs-storage
+    awsElasticBlockStore:
+      volumeID: vol-0c1234567890abcdef  # Use the EBS volume ID you created earlier
+      fsType: ext4                      # File system type (e.g., ext4)
+    </pre>
+
+    <h3>NFS (Network File System) Volume in Kubernetes</h3>
+    <p>NFS volumes allow Pods to mount a remote file system accessible over the network, which is useful for sharing data between Pods across different nodes.</p>
+
+    <pre>
+volumes:
+  - name: nfs-volume
+    nfs:
+      server: <NFS_SERVER_IP>   # IP address of the NFS server
+      path: /mnt/nfs_share       # Path to the shared directory on the NFS server
+      readOnly: false            # Set to true if you want the volume to be read-only
+    </pre>
+
+    <h3>Persistent Volume (PV)</h3>
+    <p>A Persistent Volume (PV) is a piece of storage provisioned either within the cluster or by an external storage system (such as AWS EBS, GCP Persistent Disks, or NFS).</p>
+
+    <pre>
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: example-pv
+spec:
+  capacity:
+    storage: 1Gi                     # Size of the volume
+  accessModes:
+    - ReadWriteOnce                  # Access mode
+  persistentVolumeReclaimPolicy: Retain  # Reclaim policy (Retain, Recycle, Delete)
+  storageClassName: manual           # Storage class associated
+  hostPath:
+    path: /mnt/data                  # Host machine path
+    </pre>
+
+    <p>Check PVs:</p>
+    <pre>kubectl get pv</pre>
+
+    <h3>Persistent Volume Claim (PVC)</h3>
+    <p>A Persistent Volume Claim (PVC) is a request for storage by a Pod. A PVC specifies the desired size, access mode, and optionally, the storage class.</p>
+
+    <pre>
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: example-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce                  # Must match PV's access mode
+  resources:
+    requests:
+      storage: 1Gi                   # Requested storage size
+  storageClassName: manual           # Must match PV's storageClassName
+    </pre>
+
+    <p>Check PVCs:</p>
+    <pre>kubectl get pvc</pre>
+
+    <h3>Storage Class</h3>
+    <p>A Storage Class defines the types of storage and provisioning methods available in a Kubernetes cluster. It enables dynamic provisioning of storage when a PVC is created.</p>
+
+    <pre>
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: fast
+provisioner: kubernetes.io/aws-ebs    # Backend storage provider
+parameters:
+  type: gp2                          # EBS volume type
+  fsType: ext4                       # File system type
+    </pre>
+
+    <h3>Dynamic vs Static Provisioning</h3>
+    <p>There are two types of provisioning for Persistent Volumes:</p>
+    <ul>
+        <li><strong>Static Provisioning</strong>: Administrators manually provision PVs and match them with PVCs.</li>
+        <li><strong>Dynamic Provisioning</strong>: PVs are created automatically based on StorageClass when a PVC is created.</li>
+    </ul>
+
+    <h3>Use the PVC in a Pod</h3>
+    <pre>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pvc-demo-pod
+spec:
+  containers:
+  - name: app-container
+    image: nginx
+    volumeMounts:
+    - mountPath: "/data"
+      name: pvc-volume
+  volumes:
+  - name: pvc-volume
+    persistentVolumeClaim:
+      claimName: dynamic-pvc     
+    </pre>
+
+    <h3>Describe PV or PVC</h3>
+    <ul>
+        <li>Describe a PV: <code>kubectl describe pv <pv-name></code></li>
+        <li>Describe a PVC: <code>kubectl describe pvc <pvc-name></code></li>
+    </ul>
+
+    <h3>Changing the Default Pod Limit on a Node</h3>
+    <p>By default, Kubernetes sets a limit of 110 Pods per node. To change this limit, you need to modify the kubelet configuration file.</p>
+
+    <pre>
+Vim /var/lib/kubelet/config.yaml
+
+maxPods: 200        # Set the desired pod limit
+    </pre>
+
+    <p>Check the current node pod limit:</p>
+    <pre>kubectl describe node <node-name> | grep "Pods"</pre>
+   
+        <h3> Quotas and Limit Ranges</h3> 
+
+    <h3>Resource Quotas in Kubernetes</h3>
+    <p>Resource quotas in Kubernetes are used to limit the consumption of compute resources (such as CPU and memory) and the number of object resources (like Pods, Services, PVCs, ConfigMaps, and Secrets) within a namespace. They ensure that no single namespace consumes more than its fair share of resources.</p>
+
+    <h4>Key Points:</h4>
+    <ul>
+        <li>Resource quotas are applied at the namespace level.</li>
+        <li>They prevent resource exhaustion in multi-tenant clusters by enforcing limits on namespaces.</li>
+        <li>Pods in a namespace with a resource quota must specify resource requests and limits; otherwise, Pod creation will fail.</li>
+        <li>Default <code>LimitRanges</code> can be defined to avoid failed Pod creation by automatically applying default resource requests and limits.</li>
+    </ul>
+
+    <h4>Example: Resource Quota YAML</h4>
+    <pre>
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: example-quota
+  namespace: default
+spec:
+  hard:
+    pods: "10"                     # Maximum number of Pods in the namespace
+    requests.cpu: "2"              # Total CPU requests allowed
+    requests.memory: "1Gi"         # Total memory requests allowed
+    limits.cpu: "4"                # Total CPU limit allowed
+    limits.memory: "2Gi"           # Total memory limit allowed
+    persistentvolumeclaims: "5"    # Maximum number of PVCs allowed
+    </pre>
+
+    <h4>Important Commands:</h4>
+    <ul>
+        <li>Create a Resource Quota: <code>kubectl apply -f <resource-quota-file>.yaml</code></li>
+        <li>View Resource Quotas in a Namespace: <code>kubectl get resourcequota -n <namespace></code></li>
+        <li>Describe a Resource Quota: <code>kubectl describe resourcequota <quota-name> -n <namespace></code></li>
+        <li>Delete a Resource Quota: <code>kubectl delete resourcequota <quota-name> -n <namespace></code></li>
+    </ul>
+
+    <h3>Limit Ranges in Kubernetes</h3>
+    <p>Limit Ranges enforce default resource requests and limits for Pods and containers in a namespace. They ensure that Pods have sensible defaults for resource usage and do not exceed predefined boundaries.</p>
+
+    <h4>Key Points:</h4>
+    <ul>
+        <li>Limit Ranges are applied at the namespace level.</li>
+        <li>If a Pod requests or limits exceed the max values or fall below the min, the Pod creation fails.</li>
+        <li>They help prevent over-provisioning or under-provisioning of resources.</li>
+    </ul>
+
+    <h4>Example: Limit Range YAML</h4>
+    <pre>
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: resource-limits
+  namespace: default
+spec:
+  limits:
+  - type: Container
+    default:
+      cpu: "500m"          # Default CPU limit
+      memory: "512Mi"      # Default memory limit
+    defaultRequest:
+      cpu: "250m"          # Default CPU request
+      memory: "256Mi"      # Default memory request
+    max:
+      cpu: "1"             # Maximum CPU allowed
+      memory: "1Gi"        # Maximum memory allowed
+    min:
+      cpu: "100m"          # Minimum CPU required
+      memory: "128Mi"      # Minimum memory required
+    </pre>
+
+    <h4>Important Commands:</h4>
+    <ul>
+        <li>Get Limit Ranges in a Namespace: <code>kubectl get limitrange -n <namespace></code></li>
+        <li>Describe a Limit Range: <code>kubectl describe limitrange <limit-range-name> -n <namespace></code></li>
+        <li>Delete a Limit Range: <code>kubectl delete limitrange <limit-range-name> -n <namespace></code></li>
+    </ul>
+
+    <h3>Example: Pod Creation in a Namespace with a Limit Range</h3>
+    <p>If a Pod does not specify resource requests or limits, the <code>LimitRange</code> will automatically apply defaults:</p>
+
+    <h4>Pod YAML: limit-range-demo.yaml</h4>
+    <pre>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: limit-range-demo
+  namespace: default
+spec:
+  containers:
+  - name: nginx-container
+    image: nginx
+    resources: {}  # No explicit requests/limits
+    </pre>
+
+    <h4>Verify the Applied Resource Limits</h4>
+    <pre>
+kubectl describe pod limit-range-demo -n default
+    </pre>
+
+    <p>This will display the applied resource requests and limits inherited from the <code>LimitRange</code>.</p>
+</div>
+
+<!-- Chapter 8 Content -->
+<div class="container">
+    <h2 id="toc" class="chapter-title">Chapter 8: Kubernetes Stateful Workloads</h2>
+    
+    <h3>StatefulSets: Managing Stateful Applications</h3>
+    <p><strong>What is it?</strong><br>
+    A <strong>StatefulSet</strong> is a Kubernetes controller designed to manage stateful applications. Stateful applications are those that require stable, unique network identities, and persistent storage that is retained across pod restarts. Examples of stateful applications include databases, caches, and any application that relies on consistent storage or identity.</p>
+
+    <p><strong>Key Features:</strong></p>
+    <ul>
+        <li><strong>Stable network identities:</strong> Each pod in a StatefulSet gets a unique, stable DNS hostname based on its ordinal index.</li>
+        <li><strong>Persistent storage:</strong> StatefulSets are used in conjunction with persistent volume claims (PVCs) to ensure data is stored and preserved across pod restarts.</li>
+        <li><strong>Ordered deployments and scaling:</strong> Pods are created and terminated in a specific order. Pods are scaled one at a time in a sequential order, ensuring that they are available before proceeding to the next one.</li>
+    </ul>
+
+    <p><strong>Example YAML:</strong></p>
+    <pre>
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: web
+spec:
+  serviceName: "web"
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi
+    </pre>
+
+    <p><strong>How it works:</strong></p>
+    <ul>
+        <li>StatefulSets ensure that each pod in the set gets a unique identity (e.g., pod-0, pod-1, pod-2) and persistent storage.</li>
+        <li>The volume associated with each pod is retained even if the pod is deleted and recreated, ensuring data persistence.</li>
+        <li>The pods are deployed in a specific order, and scaling operations are also performed one at a time.</li>
+    </ul>
+
+    <h3>DaemonSets: Running Pods on Every Node</h3>
+    <p><strong>What is it?</strong><br>
+    A <strong>DaemonSet</strong> is a Kubernetes controller that ensures that a pod runs on every node in a cluster. This is useful for applications that need to be run on every node, such as logging agents, monitoring agents, or networking tools.</p>
+
+    <p><strong>Key Features:</strong></p>
+    <ul>
+        <li><strong>Pod on every node:</strong> DaemonSets guarantee that a specific pod will run on every node in the cluster.</li>
+        <li><strong>Automatic updates:</strong> When new nodes are added to the cluster, DaemonSets automatically schedule the pod on those new nodes.</li>
+        <li><strong>Selective node placement:</strong> DaemonSets can be configured to run on specific nodes using node selectors or taints and tolerations.</li>
+    </ul>
+
+    <p><strong>Example YAML:</strong></p>
+    <pre>
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: logging-agent
+spec:
+  selector:
+    matchLabels:
+      app: logging-agent
+  template:
+    metadata:
+      labels:
+        app: logging-agent
+    spec:
+      containers:
+      - name: agent
+        image: logging-agent:latest
+        ports:
+        - containerPort: 514
+    </pre>
+
+    <p><strong>How it works:</strong></p>
+    <ul>
+        <li>DaemonSets ensure that the specified pod runs on each node in the cluster, providing uniform coverage for logging, monitoring, or other essential services.</li>
+        <li>When a new node is added to the cluster, DaemonSet automatically schedules the pod to run on that node.</li>
+        <li>If a node is removed, the pod scheduled on that node is also removed.</li>
+    </ul>
+
+    <h3>When to Use StatefulSets vs DaemonSets?</h3>
+    <ul>
+        <li><strong>StatefulSets:</strong> Use when managing stateful applications that require unique identities and persistent storage.</li>
+        <li><strong>DaemonSets:</strong> Use when you need to run a pod on every node in your cluster, typically for system-level services like logging, monitoring, or networking tools.</li>
+    </ul>
+</div>
+
+<!-- Chapter 9 Content -->
+<div class="container">
+    <h2 id="toc" class="chapter-title">Chapter 9: Kubernetes Deployment Strategies</h2>
+    <p>When managing application updates in Kubernetes, you want to roll out new versions with minimal downtime and without causing disruption. Kubernetes offers several deployment strategies to ensure high availability during updates. Below are the commonly used strategies:</p>
+
+    <h3>1. Rolling Deployment</h3>
+    <p><strong>What is it?</strong><br>
+    A <strong>Rolling Update</strong> strategy updates your application gradually, replacing old versions of your pods with new ones over time. This ensures minimal downtime, as the update happens in phases. It’s like rolling out a new version in a controlled manner without taking everything down at once.</p>
+
+    <p><strong>Key Parameters:</strong></p>
+    <ul>
+        <li><strong>maxSurge:</strong> This defines how many new pods can be created during the update process. It allows you to scale up the number of pods temporarily to ensure smooth transitions.</li>
+        <li><strong>maxUnavailable:</strong> This defines how many old pods can be unavailable during the update. It ensures some pods are still running while others are updated.</li>
+    </ul>
+
+    <p><strong>Example YAML:</strong></p>
+    <pre>
+strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxSurge: 2  # Number of new pods to create above the desired count
+    maxUnavailable: 0  # Number of old pods that can be unavailable during update
+    </pre>
+
+    <p><strong>How it works:</strong></p>
+    <ul>
+        <li>Kubernetes gradually creates new pods and removes old ones.</li>
+        <li>The <strong>maxSurge</strong> ensures that new pods are ready before taking down old ones.</li>
+        <li><strong>maxUnavailable</strong> makes sure that the desired number of pods is maintained during the update.</li>
+    </ul>
+
+    <h3>2. Canary Deployment</h3>
+    <p><strong>What is it?</strong><br>
+    A <strong>Canary Deployment</strong> allows you to release the new version of your application to a small subset of users before fully switching all traffic to the new version. This is ideal for testing the new version with real users but on a smaller scale.</p>
+
+    <p><strong>How it works:</strong></p>
+    <ul>
+        <li>First, a small portion of your traffic is directed to the new version of your app (the "canary").</li>
+        <li>Once you're confident in the new version’s stability, you gradually shift more traffic to it until the new version is fully rolled out.</li>
+    </ul>
+
+    <p><strong>Tools to implement:</strong></p>
+    <ul>
+        <li>Tools like <strong>Argo Rollouts</strong> can be used to automate the gradual traffic shift in Kubernetes.</li>
+    </ul>
+
+    <h3>3. Blue-Green Deployment</h3>
+    <p><strong>What is it?</strong><br>
+    A <strong>Blue-Green Deployment</strong> involves maintaining two identical environments: one running the current version of your application (Blue) and the other running the new version (Green). You switch traffic between these environments, ensuring minimal downtime.</p>
+
+    <p><strong>How it works:</strong></p>
+    <ul>
+        <li>The <strong>Blue</strong> environment is live and serving traffic.</li>
+        <li>The <strong>Green</strong> environment is where the new version of the app is deployed.</li>
+        <li>Once Green is tested and confirmed to be stable, you switch the traffic to the Green environment.</li>
+    </ul>
+
+    <p><strong>Benefits:</strong></p>
+    <ul>
+        <li>Zero downtime during deployment.</li>
+        <li>Rollback is easy by simply switching back to the Blue environment.</li>
+    </ul>
+
+    <h3>4. Recreate Deployment</h3>
+    <p><strong>What is it?</strong><br>
+    In a <strong>Recreate Deployment</strong>, Kubernetes terminates all running pods before starting new ones. This ensures that only one version of the application is running at any given time.</p>
+
+    <p><strong>How it works:</strong></p>
+    <ul>
+        <li>The existing pods are deleted.</li>
+        <li>New pods with the updated version are created afterward.</li>
+    </ul>
+
+    <p><strong>Note:</strong><br>
+    This strategy may result in some downtime because there is a period where no pods are available.</p>
+
+    <p><strong>Example YAML:</strong></p>
+    <pre>
+strategy:
+  type: Recreate
+    </pre>
+
+    <h3>Which Deployment Strategy to Use?</h3>
+    <ul>
+        <li><strong>Rolling Deployment:</strong> The most commonly used and recommended for most use cases because it minimizes downtime while updating your application.</li>
+        <li><strong>Canary Deployment:</strong> Ideal for safely testing new versions with a small subset of users before fully rolling it out.</li>
+        <li><strong>Blue-Green Deployment:</strong> Best if you want a zero-downtime deployment and a straightforward rollback mechanism.</li>
+        <li><strong>Recreate Deployment:</strong> Should be used when you are okay with downtime during the update, and the application requires a fresh start.</li>
+    </ul>
+</div>
+<!-- Chapter 19 Content -->
+<div class="container">
+    <h2 id="toc" class="chapter-title">Chapter 10: Batch Processing</h2>
+
+    <h3>Jobs: Running Finite Tasks</h3>
+    <p>A <strong>Job</strong> in Kubernetes ensures that a specified number of Pods complete their tasks successfully. It is commonly used for short-lived, one-time workloads that need to run to completion.</p>
+
+    <pre>
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: example-job
+spec:
+  completions: 3  # Total successful completions needed
+  parallelism: 2  # Pods to run in parallel
+  template:
+    spec:
+      containers:
+      - name: example-task
+        image: busybox
+        command: ["sh", "-c", "echo 'Hello, Kubernetes!' && sleep 10"]
+      restartPolicy: OnFailure  # Restart only on failure
+    </pre>
+
+    <h4>Explanation:</h4>
+    <ul>
+        <li><strong>completions:</strong> Specifies the total number of successful completions required.</li>
+        <li><strong>parallelism:</strong> Controls how many Pods can run concurrently.</li>
+        <li><strong>restartPolicy:</strong> Ensures that failed Pods are restarted automatically.</li>
+    </ul>
+
+    <h3>CronJobs: Scheduling Recurring Tasks</h3>
+    <p>A <strong>CronJob</strong> in Kubernetes schedules Jobs to run periodically based on a specified cron schedule. CronJobs are ideal for recurring tasks such as backups, report generation, or periodic health checks.</p>
+
+    <pre>
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: example-cronjob
+spec:
+  schedule: "*/5 * * * *"  # Every 5 minutes
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: periodic-task
+            image: busybox
+            command: ["sh", "-c", "echo 'This task runs every 5 minutes!'"]
+          restartPolicy: OnFailure
+  successfulJobsHistoryLimit: 3  # Retain the last 3 successful runs
+  failedJobsHistoryLimit: 2      # Retain the last 2 failed runs
+    </pre>
+
+    <h4>Explanation:</h4>
+    <ul>
+        <li><strong>schedule:</strong> Specifies the cron schedule (e.g., <code>*/5 * * * *</code> runs every 5 minutes).</li>
+        <li><strong>jobTemplate:</strong> Defines the pod template for the job to run.</li>
+        <li><strong>successfulJobsHistoryLimit:</strong> Specifies how many successful job records should be retained.</li>
+        <li><strong>failedJobsHistoryLimit:</strong> Specifies how many failed job records should be retained.</li>
+    </ul>
+
+    <h3>Monitoring Jobs and CronJobs</h3>
+    <p>You can monitor the status of your jobs and cron jobs using the following commands:</p>
+    <pre>kubectl get pods</pre>
+    <p>To view logs of a specific job pod:</p>
+    <pre>kubectl logs pods/cpu-mem-monitor-cronjob-28892885-knqs9</pre>
+</div>
+<!-- Chapter 11 Content -->
+<div class="container">
+    <h2 id="chapter11" class="chapter-title">Chapter 11: Role-Based Access Control (RBAC) in Kubernetes</h2>
+    <p>RBAC is a secure and flexible way to manage authorization in Kubernetes. It allows administrators to define granular permissions for users, groups, or service accounts based on their roles within the cluster.</p>
+    
+    <h3>Key Concepts of RBAC</h3>
+    <ul>
+        <li><strong>Verbs:</strong> Actions allowed on resources (e.g., get, list, create, update, delete).</li>
+        <li><strong>Resources:</strong> Kubernetes API objects like pods, services, secrets, configmaps.</li>
+        <li><strong>Subjects:</strong> The entities that are assigned roles: users, groups, or service accounts.</li>
+    </ul>
+
+    <h3>Role</h3>
+    <p>A set of permissions (verbs and resources) defined within a particular namespace.</p>
+    <pre>
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: pod-reader
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+    </pre>
+    <p><strong>To apply this role:</strong> <code>kubectl apply -f role.yaml</code></p>
+    <p><strong>To check the created role:</strong> <code>kubectl get role</code></p>
+
+    <h3>RoleBinding</h3>
+    <p>Links a Role to a user, group, or service account within a specific namespace.</p>
+    <pre>
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-pods
+  namespace: default
+subjects:
+- kind: User
+  name: Vaibhav
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+    </pre>
+    <p><strong>To apply this role binding:</strong> <code>kubectl apply -f rolebinding.yaml</code></p>
+    <p><strong>To check the created role binding:</strong> <code>kubectl get rolebinding</code></p>
+    <p><strong>To check the permissions of the Vaibhav user:</strong> <code>kubectl auth can-i get pod --as Vaibhav</code></p>
+
+    <h3>ClusterRole</h3>
+    <p>Similar to a Role but applies cluster-wide, used to define permissions that are not limited to a single namespace.</p>
+    <pre>
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: secret-reader
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "watch", "list"]
+    </pre>
+    <p><strong>To apply this cluster role:</strong> <code>kubectl apply -f clusterrole.yaml</code></p>
+    <p><strong>To check the created cluster role:</strong> <code>kubectl get clusterrole</code></p>
+
+    <h3>Role Binding (Namespace-level)</h3>
+    <p>The <code>rolebinding.yaml</code> file defines a role binding named <strong>read-secrets</strong> that binds the <strong>secret-reader</strong> cluster role to the user <strong>dev</strong> in the <strong>development</strong> namespace.</p>
+    <pre>
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-secrets
+  namespace: development
+subjects:
+- kind: User
+  name: dev
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: secret-reader
+  apiGroup: rbac.authorization.k8s.io
+    </pre>
+    <p><strong>To apply this role binding:</strong> <code>kubectl apply -f rolebinding.yaml</code></p>
+    <p><strong>To check the created role binding:</strong> <code>kubectl get rolebinding</code></p>
+    <p><strong>To check the permissions of the dev user in the development namespace:</strong> <code>kubectl auth can-i get secret --as dev -n development</code></p>
+
+    <h3>ClusterRoleBinding</h3>
+    <p>Links a ClusterRole to a user, group, or service account at the cluster level.</p>
+    <pre>
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: read-secrets-global
+subjects:
+- kind: User
+  name: vaibhav
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: secret-reader
+  apiGroup: rbac.authorization.k8s.io
+    </pre>
+    <p><strong>To apply this cluster role binding:</strong> <code>kubectl apply -f clusterrolebinding.yaml</code></p>
+    <p><strong>To check the created cluster role binding:</strong> <code>kubectl get clusterrolebinding</code></p>
+    <p><strong>To check the permissions of the vaibhav user across all namespaces:</strong> <code>kubectl auth can-i get secret --as vaibhav -A</code></p>
+
+<h3>Service Account in Kubernetes </h3> 
+    <p>Service Accounts in Kubernetes allow you to authenticate and authorize applications and services running within a cluster. They provide a way to grant specific permissions and access control to pods and containers. By default, every Pod in Kubernetes uses the <strong>default</strong> ServiceAccount.</p>
+
+    <h3>In this practical, we will cover the following steps:</h3>
+    <ul>
+        <li>Creating a Service Account</li>
+        <li>Creating a token for the Service Account</li>
+        <li>Creating a Role to define permissions</li>
+        <li>Creating a RoleBinding to associate the Role with the Service Account</li>
+        <li>Using the Service Account in a Pod</li>
+        <li>Verifying access permissions</li>
+    </ul>
+
+    <h3>Creating a Service Account</h3>
+    <p>To create a Service Account, use the following command:</p>
+    <pre>kubectl create sa my-service-account</pre>
+    <p>You can also define it in a YAML file:</p>
+    <pre>
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: my-service-account
+  namespace: default
+    </pre>
+
+    <h3>Creating a Token for the Service Account</h3>
+    <p>To create a token for the Service Account, use the following command:</p>
+    <pre>kubectl create token my-service-account</pre>
+
+    <h3>Defining Permissions with Roles</h3>
+    <p>To define permissions for the Service Account, we need to create a Role. Below is the YAML definition for a Role that grants read access to Pods:</p>
+    <pre>
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: pod-reader
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+    </pre>
+
+    <h3>Creating a RoleBinding to Associate the Role with the Service Account</h3>
+    <p>To associate the Role with the Service Account, create a RoleBinding as shown below:</p>
+    <pre>
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-pods
+  namespace: default
+subjects:
+- kind: ServiceAccount
+  name: my-service-account
+  namespace: default
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+    </pre>
+
+    <h3>Using the Service Account in a Pod</h3>
+    <p>To use the Service Account in a Pod, specify the <code>serviceAccountName</code> field in the Pod's YAML configuration:</p>
+    <pre>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  serviceAccountName: my-service-account
+  containers:
+  - name: nginx
+    image: nginx:1.14.2
+    ports:
+    - containerPort: 80
+    </pre>
+
+    <h3>Verifying Access Permissions</h3>
+    <p>To verify the access permissions of the Service Account, use the following command:</p>
+    <pre>kubectl auth can-i get pods --as=system:serviceaccount:default:my-service-account</pre>
+    
+    
+  <h2>Secrets and ConfigMap in Kubernetes</h2>
+   
+
+    <h3>Secrets in Kubernetes</h3>
+    <p>Kubernetes Secrets are used to store and manage sensitive information such as passwords, OAuth tokens, SSH keys, etc.</p>
+
+    <h4>Key Points:</h4>
+    <ul>
+        <li>Secrets are stored in <strong>etcd</strong> in base64-encoded format.</li>
+        <li>The maximum size of a single secret is 1MB.</li>
+        <li>Kubernetes does not encrypt secrets by default, but it is recommended to enable encryption at rest for secrets in etcd.</li>
+    </ul>
+
+    <h4>Types of Secrets in Kubernetes</h4>
+    <p><strong>Generic Secrets:</strong> These are the most commonly used secrets, where you can store various types of sensitive information such as keys, passwords, and more.</p>
+
+    <h4>Create a Secret from Literal Values</h4>
+    <p>To create a secret from literal values, use the following command:</p>
+    <pre>kubectl create secret generic <secret-name> --from-literal=username=dbuser --from-literal=password=secretpass</pre>
+
+    <h4>Create a Secret from a File</h4>
+    <p>You can also create a secret from the contents of a file, where the file will be encoded in base64 and stored:</p>
+    <pre>kubectl create secret generic <secret-name> --from-file=<path-to-file></pre>
+
+    <h4>Create a Secret and Export to YAML File</h4>
+    <p>To view the secret, you can export it to a YAML file:</p>
+    <pre>kubectl get secrets <secret-name> -o yaml > secret-file.yaml</pre>
+
+    <h4>Base64 Encoding</h4>
+    <p>When creating a secret in Kubernetes, data is always stored in base64-encoded format. For example:</p>
+    <pre>echo -n "vaibhav" | base64</pre>
+    <p><strong>Output:</strong> YWRtaW4=</p>
+
+    <h4>Secret YAML Definition Example</h4>
+    <pre>
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-secret
+data:
+  username: YWRtaW4=      # Base64 encoded value for 'admin'
+  password: c2VjcmV0     # Base64 encoded value for 'secret'
+    </pre>
+
+    <h4>Accessing Secrets in Pods</h4>
+    <p>To use the secret in a Pod, you can reference it in your pod's specification as environment variables or mount it as a file.</p>
+
+    <h5>1. Use Secrets as Environment Variables</h5>
+    <pre>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secret-env-pod
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    env:
+    - name: DB_USER
+      valueFrom:
+        secretKeyRef:
+          name: my-secret
+          key: username
+    - name: DB_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: my-secret
+          key: password
+    </pre>
+
+    <h5>2. Mount Secrets as Volumes</h5>
+    <pre>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secret-volume-pod
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    volumeMounts:
+    - name: secret-volume
+      mountPath: "/etc/secrets"
+      readOnly: true
+  volumes:
+  - name: secret-volume
+    secret:
+      secretName: my-secret
+    </pre>
+    <p>In this case, the secrets username and password will be available in the /etc/secrets/ directory of the container.</p>
+
+    <h4>Important Commands</h4>
+    <ul>
+        <li>To list all secrets in the current namespace: <code>kubectl get secrets</code></li>
+        <li>To view a secret in base64-encoded format: <code>kubectl get secret <secret-name> -o yaml</code></li>
+        <li>To delete a secret: <code>kubectl delete secret <secret-name></code></li>
+    </ul>
+
+    <h3>ConfigMap in Kubernetes</h3>
+    <p><strong>ConfigMaps</strong> store non-sensitive data like environment variables, command-line arguments, and application configurations. Data can be stored as key-value pairs or files.</p>
+    <p><strong>Note:</strong> ConfigMaps are not designed for storing sensitive data. Use Secrets for sensitive information.</p>
+
+    <h4>Example YAML Definition for a ConfigMap</h4>
+    <pre>
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-configmap
+data:
+  version: "16"   # Configuration key-value pair
+  name: "admin"
+    </pre>
+
+    <h4>Accessing ConfigMaps in Pods</h4>
+    <p>You can use ConfigMaps in Pods as environment variables or mounted volumes.</p>
+
+    <h5>Use ConfigMap as Mounted Volumes</h5>
+    <pre>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: configmap-volume-pod
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    volumeMounts:
+    - name: config-volume
+      mountPath: "/etc/config"
+  volumes:
+  - name: config-volume
+    configMap:
+      name: my-configmap
+    </pre>
+
+    <h4>Important Commands</h4>
+    <ul>
+        <li>To list ConfigMaps: <code>kubectl get configmaps</code></li>
+        <li>To view ConfigMap details: <code>kubectl get configmap <configmap-name> -o yaml</code></li>
+        <li>To delete ConfigMap: <code>kubectl delete configmap <configmap-name></code></li>
+        <li>To edit ConfigMap: <code>kubectl edit configmap <configmap-name></code></li>
+    </ul>
+
+</div>
+<!-- Chapter 12 Content -->
+<div class="container">
+  <h2 id="chapter11" class="chapter-title">Chapter 12: Advanced Kubernetes Security </h2>
+    <h2 id="chapter11" class="chapter-title">Kubernetes Auditing </h2>
+
+    <p>Kubernetes Auditing is an important security measure that helps you monitor and audit various activities in the cluster to ensure its security and compliance.</p>
+
+    <h3>Logs Include Details Such As:</h3>
+    <ul>
+        <li><strong>Timestamp:</strong> When the request was made.</li>
+        <li><strong>User Identity:</strong> Who made the request.</li>
+        <li><strong>Resource:</strong> What resource the request targeted (e.g., Pods, Services).</li>
+        <li><strong>Action:</strong> What action was performed (e.g., GET, POST, DELETE).</li>
+    </ul>
+
+    <h3>Audit Backends</h3>
+    <p>Kubernetes supports different output backends for audit logs:</p>
+    <ul>
+        <li><strong>Log Backend:</strong> Writes logs to a file.</li>
+        <li><strong>Webhook Backend:</strong> Sends audit events to a remote server.</li>
+    </ul>
+
+    <h3>Audit Policy</h3>
+    <p>Audit policies define how and what information gets logged. There are four levels:</p>
+    <ul>
+        <li><strong>None:</strong> Do not log events that match this rule.</li>
+        <li><strong>Metadata:</strong> Log basic details like user, time, resource, and action, but not the request or response content.</li>
+        <li><strong>Request:</strong> Log details and the request content, but not the response content.</li>
+        <li><strong>RequestResponse:</strong> Log everything — details, request content, and response content.</li>
+    </ul>
+
+    <h3>Stages</h3>
+    <p>The stages define at which point the request should be logged:</p>
+    <ul>
+        <li><strong>RequestReceived:</strong> Logged when the audit handler gets the request, before passing it further.</li>
+        <li><strong>ResponseStarted:</strong> Logged after response headers are sent but before the body (e.g., for long-running requests like watch).</li>
+        <li><strong>ResponseComplete:</strong> Logged when the response body is fully sent, and no more data will follow.</li>
+        <li><strong>Panic:</strong> Logged if a system panic (critical error) occurs.</li>
+    </ul>
+
+    <h4>Check Supported Audit Policy Versions</h4>
+    <pre><code>kubectl api-resources | grep audit</code></pre>
+
+    <h3>Audit Policy File</h3>
+    <p>Create an audit policy file (e.g., <code>/etc/kubernetes/audit-policy.yaml</code>) to define events and rules to be audited:</p>
+
+    <h4>Example Audit Policy YAML</h4>
+    <pre>
+apiVersion: audit.k8s.io/v1
+kind: Policy
+rules:
+  # Log changes to Namespaces and Pods at the RequestResponse level.
+  - level: RequestResponse
+    resources:
+      - group: "*"
+        resources: ["pods", "namespaces"]
+  # Log pod changes in specific namespaces (e.g., "dey" and "default") at the Request level.
+  - level: Request
+    resources:
+      - group: "*"
+        resources: ["pods"]
+    namespaces: ["dey", "default"]
+  # Log changes to ConfigMaps, Secrets, Services, Deployments, and ServiceAccounts at the Metadata level.
+  - level: Metadata
+    resources:
+      - group: ""
+        resources: ["secrets", "configmaps", "services", "deployments", "serviceaccounts"]
+  # Catch-all rule - Log all requests at the Metadata level.
+  - level: Metadata
+    </pre>
+
+    <h4>Verify Audit Policy File</h4>
+    <pre><code>kubectl apply -f /etc/kubernetes/audit-policy.yaml --dry-run=client</code></pre>
+
+    <h3>Enable Auditing on the API Server</h3>
+    <p>Edit the configuration file of the Kubernetes API Server (usually <code>/etc/kubernetes/manifests/kube-apiserver.yaml</code>) to add audit configuration:</p>
+
+    <h4>API Server Configuration</h4>
+    <pre>
+- --audit-log-path=/var/log/k8-audit.log
+- --audit-policy-file=/etc/kubernetes/audit-policy.yaml
+- --audit-log-maxage=10
+- --audit-log-maxbackup=5
+- --audit-log-maxsize=100
+
+volumeMounts:
+  - name: audit
+    mountPath: /etc/kubernetes/audit
+    readOnly: false 
+
+volumes:
+  - name: audit
+    hostPath:
+      path: /etc/kubernetes/audit
+      type: DirectoryOrCreate
+    </pre>
+
+    <h4>Parameter Descriptions:</h4>
+    <ul>
+        <li><strong>--audit-log-path:</strong> Path to store audit logs.</li>
+        <li><strong>--audit-log-format=json:</strong> Specifies the format of the audit log.</li>
+        <li><strong>--audit-log-maxage:</strong> Number of days to retain audit log files.</li>
+        <li><strong>--audit-log-maxbackup:</strong> Maximum number of backups for audit log files.</li>
+        <li><strong>--audit-log-maxsize:</strong> Maximum size (in MB) for audit log files.</li>
+        <li><strong>--audit-policy-file:</strong> Path to the audit policy file.</li>
+    </ul>
+
+    <h4>Restart the API Server</h4>
+    <pre><code>sudo systemctl restart kubelet</code></pre>
+
+    <h3>Monitor Audit Logs</h3>
+    <p>Audit logs are recorded in the specified path. For example:</p>
+    <pre><code>cat /var/log/k8-audit.log</code></pre>
+    <p>To monitor sensitive operations, such as Pod creation and deletion:</p>
+    <pre><code>cat /var/log/kubernetes/audit.log | grep "CreatePod"</code></pre>
+</div>
+<div class="container">
+  <h2 id="toc" class="chapter-title">Security Context in Kubernetes</h2>
+
+  <h3>Security Context in Kubernetes</h3>
+  <p>The Security Context in Kubernetes provides an additional layer of security for a Pod or container. It defines privilege and access control settings, enhancing the security posture of your applications.</p>
+
+  <h4>Types of Security Contexts</h4>
+  <ul>
+      <li><strong>Pod-Level Security Context</strong>: Applies settings to all containers within a Pod.</li>
+      <li><strong>Container-Level Security Context</strong>: Applies specific settings to an individual container.</li>
+  </ul>
+
+  <h4>Key Use Cases</h4>
+  <ul>
+      <li>Running processes as non-root users</li>
+      <li>Restricting file access</li>
+      <li>Managing network interface access</li>
+      <li>Configuring system-level permissions</li>
+  </ul>
+
+  <h4>Pod-Level Security Context Example</h4>
+  <pre><code>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: security-context-demo
+spec:
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 3000
+    fsGroup: 2000
+  containers:
+  - name: sc-demo
+    image: busybox:1.28
+    command: ["sh", "-c", "sleep 1h"]
+  </code></pre>
+
+  <p>Commands:</p>
+  <ul>
+      <li><code>kubectl apply -f sc-demo-1.yaml</code></li>
+      <li><code>kubectl exec -it security-context-demo -- /bin/sh</code></li>
+      <li><code>id</code></li>
+      <li><code>ps aux</code></li>
+  </ul>
+
+  <h3>Adding Linux Capabilities with Security Context</h3>
+  <p>This example demonstrates adding the <code>NET_ADMIN</code> capability to a container:</p>
+  <pre><code>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: security-context-demo-3
+spec:
+  containers:
+  - name: sc-demo-3
+    image: ubuntu
+    command: ["sh", "-c", "sleep 1h"]
+    securityContext:
+      capabilities:
+        add: ["NET_ADMIN"]
+        drop: ["ALL"]
+  </code></pre>
+
+  <p>Commands to Apply and Verify:</p>
+  <ol>
+      <li>Apply the YAML file:
+          <pre><code>kubectl apply -f sc-demo-3.yaml</code></pre>
+      </li>
+      <li>Access the Pod shell:
+          <pre><code>kubectl exec -it security-context-demo-3 -- /bin/bash</code></pre>
+      </li>
+      <li>Install necessary packages and verify:
+          <pre><code>
+apt update
+apt install iproute2
+ip link show
+ip addr add 192.168.0.10/24 dev eth0
+ip addr show eth0
+          </code></pre>
+      </li>
+  </ol>
+
+  <h4>Key Fields in Security Context</h4>
+  <table>
+      <thead>
+          <tr>
+              <th>Field</th>
+              <th>Description</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td>runAsUser</td>
+              <td>Specifies the user ID for running the container process.</td>
+          </tr>
+          <tr>
+              <td>runAsGroup</td>
+              <td>Specifies the group ID for the container process.</td>
+          </tr>
+          <tr>
+              <td>fsGroup</td>
+              <td>Defines the file system group ID for shared storage.</td>
+          </tr>
+          <tr>
+              <td>allowPrivilegeEscalation</td>
+              <td>Prevents processes inside the container from gaining additional privileges.</td>
+          </tr>
+          <tr>
+              <td>privileged</td>
+              <td>Allows or disallows running the container in privileged mode.</td>
+          </tr>
+          <tr>
+              <td>readOnlyRootFilesystem</td>
+              <td>Ensures the root file system is read-only.</td>
+          </tr>
+          <tr>
+              <td>capabilities</td>
+              <td>Adds or removes specific Linux capabilities from the container.</td>
+          </tr>
+          <tr>
+              <td>seLinuxOptions</td>
+              <td>Configures SELinux labels for the Pod or container.</td>
+          </tr>
+      </tbody>
+  </table>
+</div>
+
+<div class="container">
+  <h2 id="toc" class="chapter-title"> Sealed Secrets in Kubernetes</h2>
+
+  <h3>Sealed Secrets in Kubernetes</h3>
+  <p>Sealed Secrets is a Kubernetes-native way to securely manage secrets using encryption, even before they are applied to the cluster. It ensures that sensitive information is encrypted and safely stored in version control systems like Git.</p>
+
+  <h4>How Sealed Secrets Work</h4>
+  <ul>
+      <li><strong>Encryption</strong>: A kubeseal CLI tool encrypts sensitive data using a public key from a Sealed Secrets Controller.</li>
+      <li><strong>Storage</strong>: The encrypted secret (sealed secret) is stored as a Kubernetes custom resource (CRD) in the cluster or version control.</li>
+      <li><strong>Decryption</strong>: The controller running in the cluster decrypts the sealed secret using its private key and creates a standard Kubernetes Secret.</li>
+  </ul>
+
+  <h4>Components of Sealed Secrets</h4>
+  <ul>
+      <li><strong>kubeseal CLI</strong>: A client-side tool used to encrypt secrets. It encrypts data with the public key of the Sealed Secrets controller.</li>
+      <li><strong>Sealed Secrets Controller</strong>: A Kubernetes operator running in the cluster. It manages the private key for decryption and converts sealed secrets into Kubernetes Secrets.</li>
+      <li><strong>Custom Resource Definition (CRD)</strong>: The encrypted secret is stored as a SealedSecret resource in the cluster.</li>
+  </ul>
+
+  <h4>Installation</h4>
+  <p><strong>1. Install the Controller:</strong></p>
+  <ul>
+      <li>Using Helm:
+          <pre><code>helm repo add sealed-secrets https://bitnami-labs.github.io/sealed-secrets</code></pre>
+          <pre><code>helm install sealed-secrets sealed-secrets/sealed-secrets</code></pre>
+      </li>
+      <li>Using YAML:
+          <pre><code>kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.27.3/controller.yaml</code></pre>
+      </li>
+  </ul>
+
+  <p><strong>2. Install kubeseal CLI:</strong></p>
+  <ul>
+      <li>Download from Sealed Secrets GitHub Releases: <a href="https://github.com/bitnami-labs/sealed-secrets/releases" target="_blank">Sealed Secrets Releases</a></li>
+      <li>Use the following commands:
+          <pre><code>curl -OL "https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.27.3/<br>kubeseal-0.27.3-linux-amd64.tar.gz"</code></pre>
+          <pre><code>tar -xvzf kubeseal-0.27.3-linux-amd64.tar.gz kubeseal</code></pre>
+          <pre><code>sudo install -m 755 kubeseal /usr/local/bin/kubeseal</code></pre>
+      </li>
+  </ul>
+  
+
+  <h4>Usage</h4>
+  <p><strong>1. Create a Secret</strong></p>
+  <pre><code>
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-secret
+  namespace: default
+type: Opaque
+data:
+  username: dXNlcm5hbWU=  # base64 encoded value
+  password: cGFzc3dvcmQ=  # base64 encoded value
+  </code></pre>
+
+  <p><strong>2. Encrypt the Secret</strong></p>
+  <pre><code>kubeseal --format=yaml <my-secret.yaml >my-sealed-secret.yaml</code></pre>
+  <p>The output is a SealedSecret resource:</p>
+  <pre><code>
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: my-secret
+  namespace: default
+spec:
+  encryptedData:
+    username: <encrypted-data>
+    password: <encrypted-data>
+  </code></pre>
+
+  <p><strong>3. Apply the SealedSecret:</strong></p>
+  <pre><code>kubectl apply -f sealedsecret.yaml</code></pre>
+
+  <p><strong>4. Verify the Secret Creation:</strong> The Sealed Secrets controller will create a decrypted Secret in the specified namespace (default).</p>
+  <pre><code>kubectl get secret my-secret -n default</code></pre>
+  <p>You can inspect the Secret (decoded) if needed:</p>
+  <pre><code>kubectl get secret my-secret -n default -o yaml</code></pre>
+
+  <p><strong>5. Decode them locally:</strong></p>
+  <pre><code>echo "dXNlcm5hbWU=" | base64 --decode</code></pre>
+
+  <h4>Benefits of Sealed Secrets</h4>
+  <ul>
+      <li><strong>GitOps-Friendly</strong>: Securely store and manage secrets in Git repositories.</li>
+      <li><strong>Asymmetric Encryption</strong>: Ensures only the cluster can decrypt the secret using the private key.</li>
+      <li><strong>Namespace/Cluster Binding</strong>: Secrets can be restricted to specific namespaces or clusters.</li>
+      <li><strong>Automation</strong>: Works seamlessly with CI/CD pipelines.</li>
+  </ul>
+
+</div>
+<div class="container">
+  <h2 id="toc" class="chapter-title">Kubernetes: Encrypting Secrets in etcd</h2>
+
+  <p>
+    In Kubernetes, secrets are stored in the etcd key-value store, which serves as the cluster's primary data storage. By default, secrets are only Base64-encoded, not encrypted, which makes them potentially vulnerable if etcd is compromised. Encrypting secrets at rest provides an additional layer of security to protect sensitive data.
+  </p>
+
+  <h3>Steps to Enable Secrets Encryption in etcd</h3>
+
+  <h4>Step 1: Generate an Encryption Key</h4>
+  <p>To generate a secure Base64-encoded encryption key, use:</p>
+  <pre><code>head -c 32 /dev/urandom | base64</code></pre>
+  <p>Example generated key:</p>
+  <pre><code>o556O5o4A2mSFccVEJcQdRiJ+YiYT23H8uGZYqPt+JM=</code></pre>
+
+  <h4>Step 2: Create an Encryption Configuration File</h4>
+  <p>Define the encryption provider and specify the encryption key in a new file called <code>encryption-config.yaml</code>. Example:</p>
+  <pre><code>
+apiVersion: apiserver.config.k8s.io/v1
+kind: EncryptionConfiguration
+resources:
+  - resources:
+      - secrets
+    providers:
+      - aescbc:  # Encryption provider (AES-CBC)
+          keys:
+            - name: key1
+              secret: r7uZiIe8cYNTubuljC1GPaSbIemrCfp680LM1ZDJOdY=  
+      - identity: {}  # Fallback for non-encrypted data
+  </code></pre>
+
+  <h4>Step 3: Copy the Configuration File to the Correct Location</h4>
+  <p>Copy the <code>encryption-config.yaml</code> file to the <code>/etc/kubernetes/pki/</code> directory:</p>
+  <pre><code>sudo cp encryption-config.yaml /etc/kubernetes/pki/</code></pre>
+
+  <h4>Step 4: Verify the File Location</h4>
+  <p>Check if the file has been copied successfully:</p>
+  <pre><code>ls -l /etc/kubernetes/pki/encryption-config.yaml</code></pre>
+
+  <h4>Step 5: Update the API Server Configuration</h4>
+  <p>Modify the <code>kube-apiserver</code> manifest to include the encryption configuration. The manifest file is typically located at <code>/etc/kubernetes/manifests/kube-apiserver.yaml</code>.</p>
+  <p>Add the following argument:</p>
+  <pre><code>- --encryption-provider-config=/etc/kubernetes/pki/encryption-config.yaml</code></pre>
+
+  <h4>Step 6: Restart the API Server</h4>
+  <p>
+    After saving the changes, the <code>kube-apiserver</code> pod will automatically restart. You can verify this by checking the pods in the <code>kube-system</code> namespace:
+  </p>
+  <pre><code>kubectl get pods -n kube-system</code></pre>
+
+  <h4>Step 7: Re-encrypt Existing Secrets</h4>
+  <p>Newly created secrets will be encrypted automatically. However, existing secrets will remain unencrypted. To re-encrypt them, you can:</p>
+  <p>Backup and restore secrets using a script or tool:</p>
+  <pre><code>kubectl get secrets --all-namespaces -o yaml | kubectl replace -f -</code></pre>
+
+  <h4>Step 8: Verify Encryption</h4>
+  <p>After enabling encryption at rest, verify that secrets are indeed encrypted in etcd:</p>
+  <pre><code>
+ETCDCTL_API=3 etcdctl get /registry/secrets/default/my-secret \
+  --cert=/etc/kubernetes/pki/etcd/server.crt \
+  --key=/etc/kubernetes/pki/etcd/server.key \
+  --cacert=/etc/kubernetes/pki/etcd/ca.crt
+  </code></pre>
+</div>
+<!-- Chapter 5 Content -->
+<div class="container">
+  <h2 id="toc" class="chapter-title">Chapter 13: Advanced Kubernetes Concepts</h2>
+
+  <h3>Static Pods</h3>
+  <p>Static Pods are special types of Pods managed directly by the kubelet on a specific node, bypassing the Kubernetes API server.</p>
+
+  <h4>Create a Static Pod</h4>
+  <p>Create a YAML file named <code>static-web.yaml</code>:</p>
+  <pre>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: static-web
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+  </pre>
+  <p>Copy the file to the static pod manifest folder:</p>
+  <pre>sudo cp static-web.yaml /etc/kubernetes/manifests/</pre>
+  <p>Verify that the static pod is created:</p>
+  <pre>kubectl get pods -n kube-system</pre>
+
+  <h3>Pause Containers</h3>
+  <p>A Pause Container is an automatically created container in every Pod to manage the Pod's namespace and IP.</p>
+  <p>View pause containers on a worker node:</p>
+  <pre>docker container ls</pre>
+
+  <h3>Init Containers</h3>
+  <p>Init Containers run before the main application container in a Pod, handling tasks like initialization, dependency checks, or environment configuration.</p>
+
+  <h4>YAML Example</h4>
+  <pre>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: init-container-demo
+spec:
+  initContainers:
+  - name: init-container
+    image: busybox
+    command: ["/bin/sh", "-c", "echo 'Hello from Init Container' > /tmp/message"]
+  containers:
+  - name: main-container
+    image: busybox
+    command: ["/bin/sh", "-c", "cat /tmp/message && sleep 3600"]
+  restartPolicy: Never
+  </pre>
+
+  <h4>Commands</h4>
+  <p>Create the pod:</p>
+  <pre>kubectl apply -f init-container-demo.yaml</pre>
+  <p>Verify the pod:</p>
+  <pre>kubectl get pods</pre>
+  <pre>kubectl describe pod init-container-demo</pre>
+  <p>Access the main container:</p>
+  <pre>kubectl exec -it init-container-demo -c main-container -- /bin/bash</pre>
+
+  <h3>Sidecar Containers</h3>
+  <p>A Sidecar Container runs alongside the main application container, providing helper functionality.</p>
+
+  <h4>Adapter Containers:</h4>
+  <p>Transform data between formats.</p>
+
+  <h4>Ambassador Containers:</h4>
+  <p>Act as a proxy or gateway for the application container.</p>
+
+  <h4>YAML Example</h4>
+  <pre>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-with-sidecar
+spec:
+  containers:
+  - name: nginx
+    image: nginx:alpine
+    volumeMounts:
+    - name: html
+      mountPath: /usr/share/nginx/html
+    ports:
+    - containerPort: 80
+  - name: ubuntu
+    image: ubuntu:latest
+    volumeMounts:
+    - name: html
+      mountPath: /usr/share/nginx/html
+    command: ["/bin/sh", "-c"]
+    args:
+    - echo "Hi, my name is Vaibhav" > /usr/share/nginx/html/index.html && while true; do sleep 3600; done
+  volumes:
+  - name: html
+    emptyDir: {}
+  </pre>
+
+  <h4>Commands</h4>
+  <p>Apply the configuration:</p>
+  <pre>kubectl apply -f nginx-with-sidecar.yaml</pre>
+  <p>Verify the pod:</p>
+  <pre>kubectl get pods</pre>
+  <p>Forward the port:</p>
+  <pre>kubectl port-forward pod/nginx-with-sidecar 8080:80</pre>
+  <p>Access the application in a browser at:</p>
+  <pre>http://localhost:8080</pre>
+
+  <h3>Taints and Tolerations</h3>
+  <p>Taints prevent pods from being scheduled on nodes unless tolerations are specified.</p>
+  <p>Tolerations allow pods to tolerate specific taints.</p>
+
+  <h4>Commands</h4>
+  <p>Add a taint to a node:</p>
+  <pre>kubectl taint nodes &lt;node-name&gt; &lt;key&gt;=&lt;value&gt;:&lt;effect&gt;</pre>
+  <p>Remove a taint:</p>
+  <pre>kubectl taint nodes &lt;node-name&gt; &lt;key&gt;:&lt;effect&gt;-</pre>
+
+  <h4>YAML Example for Tolerations</h4>
+  <pre>
+tolerations:
+- key: "key1"
+  operator: "Equal"
+  value: "value1"
+  effect: "NoSchedule"
+  </pre>
+
+  <h3>Kubernetes Probes</h3>
+  <p>Probes monitor the health and status of applications in containers:</p>
+
+  <ul>
+    <li><b>Liveness Probe:</b> Ensures the app is running; restarts if it fails.</li>
+    <li><b>Readiness Probe:</b> Ensures the app is ready to serve requests.</li>
+    <li><b>Startup Probe:</b> Ensures the app starts correctly.</li>
+  </ul>
+
+  <h4>YAML Example</h4>
+  <pre>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: probe-example
+spec:
+  containers:
+  - name: my-app
+    image: my-app-image
+    ports:
+    - containerPort: 8080
+    startupProbe:
+      httpGet:
+        path: /start
+        port: 8080
+      initialDelaySeconds: 15
+      periodSeconds: 10
+      failureThreshold: 30
+    livenessProbe:
+      httpGet:
+        path: /healthz
+        port: 8080
+      initialDelaySeconds: 10
+      periodSeconds: 5
+    readinessProbe:
+      httpGet:
+        path: /ready
+        port: 8080
+      initialDelaySeconds: 5
+      periodSeconds: 5
+  </pre>
+</div>
+<div class="container">
+  <h2 id="chapter6" class="chapter-title">Chapter 14: CI/CD Pipelines with Kubernetes</h2>
+  <h3>Building CI/CD Pipelines</h3>
+  <p>CI/CD (Continuous Integration and Continuous Deployment) pipelines are fundamental in modern DevOps practices. These pipelines automate the process of integrating code changes, testing, and deploying applications, leading to faster, more reliable software delivery.</p>
+  <p>In a Kubernetes environment, CI/CD pipelines can be leveraged to automate the deployment of microservices and applications across various clusters. Kubernetes provides the infrastructure to support continuous deployments with high availability, scalability, and resilience, ensuring applications are always up and running.</p>
+  <p>CI/CD pipelines usually consist of several stages:</p>
+  <ul>
+      <li><strong>Source</strong>: Code is pushed to a repository (e.g., GitHub, GitLab).</li>
+      <li><strong>Build</strong>: The application is built (using tools like Maven or Docker).</li>
+      <li><strong>Test</strong>: Unit tests, integration tests, and static code analysis are performed.</li>
+      <li><strong>Deploy</strong>: The application is deployed to a Kubernetes cluster.</li>
+      <li><strong>Monitor</strong>: Continuous monitoring and alerting to track performance and failures.</li>
+  </ul>
+  <p>By automating these stages, CI/CD pipelines eliminate manual intervention, reduce errors, and speed up the release cycle.</p>
+
+  <h3>Integrating Jenkins, GitLab CI/CD, or GitHub Actions</h3>
+  <p>Popular CI/CD tools like <strong>Jenkins</strong>, <strong>GitLab CI/CD</strong>, and <strong>GitHub Actions</strong> can be easily integrated with Kubernetes to automate deployment processes.</p>
+
+  <h4>Jenkins</h4>
+  <p>Jenkins is one of the most widely used CI/CD tools. It has a rich set of plugins, including Kubernetes plugins, that enable seamless integration with Kubernetes clusters.</p>
+  <p>Steps to integrate Jenkins with Kubernetes:</p>
+  <ul>
+      <li><strong>Install Jenkins on Kubernetes</strong>: Use the official Jenkins Helm chart or Docker image to deploy Jenkins on Kubernetes.</li>
+      <li><strong>Install Kubernetes Plugin</strong>: In Jenkins, install the Kubernetes plugin to allow Jenkins to interact with Kubernetes clusters.</li>
+      <li><strong>Create Jenkins Pipelines</strong>: Define pipelines as code using <code>Jenkinsfile</code>. Pipelines can include stages for building, testing, and deploying applications to Kubernetes clusters.</li>
+  </ul>
+
+  <h4>GitLab CI/CD</h4>
+  <p>GitLab provides built-in CI/CD functionality with easy integration into Kubernetes.</p>
+  <p>Steps to integrate GitLab CI/CD with Kubernetes:</p>
+  <ul>
+      <li><strong>Configure Kubernetes Integration</strong>: Add Kubernetes as a deployment target within GitLab CI/CD settings by providing the kubeconfig details.</li>
+      <li><strong>Define .gitlab-ci.yml</strong>: This file specifies the CI/CD pipeline stages and jobs, such as building Docker images and deploying them to Kubernetes.</li>
+      <li><strong>Use Auto DevOps</strong>: GitLab’s Auto DevOps feature can automate the entire process, from code building to deploying on Kubernetes, with minimal configuration.</li>
+  </ul>
+
+  <h4>GitHub Actions</h4>
+  <p>GitHub Actions enables you to automate workflows directly from GitHub repositories. It supports continuous deployment pipelines for Kubernetes.</p>
+  <p>Steps to integrate GitHub Actions with Kubernetes:</p>
+  <ul>
+      <li><strong>Define Workflow YAML</strong>: Create a <code>.github/workflows</code> YAML file to define your pipeline steps.</li>
+      <li><strong>Use Actions for Kubernetes</strong>: GitHub Actions has pre-built actions like <code>kubernetes-actions</code> to deploy applications on Kubernetes clusters.</li>
+      <li><strong>Docker Build and Deploy</strong>: Automate Docker builds and Kubernetes deployments with GitHub Actions, including steps like pushing images to a container registry and deploying them to a Kubernetes cluster.</li>
+  </ul>
+
+  <h3>Automating Deployments Using Helm</h3>
+  <p>Helm is a powerful package manager for Kubernetes that simplifies the deployment, management, and sharing of Kubernetes applications. Helm uses charts to define Kubernetes resources, and these charts can be versioned and reused across different environments.</p>
+  <p><strong>Why Use Helm in CI/CD Pipelines?</strong></p>
+  <ul>
+      <li><strong>Simplified Deployments</strong>: Helm allows you to define all Kubernetes resources (deployments, services, ingress) in a single chart, reducing the complexity of YAML configurations.</li>
+      <li><strong>Versioned Deployments</strong>: Helm charts are versioned, making it easier to manage different application versions across multiple environments.</li>
+      <li><strong>Reusability</strong>: Helm charts can be reused for different Kubernetes clusters and projects, enabling consistent deployments across various environments.</li>
+  </ul>
+  <p>Steps to automate deployments using Helm:</p>
+  <ul>
+      <li><strong>Create a Helm Chart</strong>: Define your application structure in a Helm chart. This includes the deployment, service, ingress, and any other resources needed by your app.</li>
+      <li><strong>Install the Chart</strong>: Use <code>helm install</code> to deploy the chart to your Kubernetes cluster, or use <code>helm upgrade</code> for updating the application.</li>
+      <li><strong>Integrate with CI/CD</strong>: Include Helm commands in your CI/CD pipeline configuration. For example, in Jenkins, GitLab CI/CD, or GitHub Actions, define steps to install and upgrade your application using Helm charts.</li>
+  </ul>
+  <p>Example Helm command for CI/CD:</p>
+  <pre><code>helm upgrade --install my-app ./my-chart --namespace production</code></pre>
+
+  <h3>Managing Configurations with Kustomize</h3>
+  <p>Kustomize is a configuration management tool that allows you to customize Kubernetes resources without modifying the original YAML files. It is particularly useful when you need to manage multiple environments (development, staging, production) and want to keep base configurations separate from environment-specific overrides.</p>
+  <p><strong>Why Use Kustomize in CI/CD Pipelines?</strong></p>
+  <ul>
+      <li><strong>Environment-Specific Configurations</strong>: Kustomize enables you to define different configurations for each environment (e.g., dev, prod) without duplicating Kubernetes resource files.</li>
+      <li><strong>Patching Resources</strong>: You can apply patches to the base YAML files to change settings like replicas, resource limits, and environment variables for different environments.</li>
+      <li><strong>No Templating</strong>: Unlike Helm, Kustomize does not use templating, making it simpler for managing YAML configurations in a version-controlled environment.</li>
+  </ul>
+  <p>Steps to manage configurations using Kustomize:</p>
+  <ul>
+      <li><strong>Create a Base Configuration</strong>: Define the common Kubernetes resources (e.g., deployments, services) in a base directory.</li>
+      <li><strong>Create Overlays for Different Environments</strong>: For each environment (e.g., dev, prod), create overlays that modify the base configuration.</li>
+      <li><strong>Apply with Kustomize</strong>: Use the <code>kustomize build</code> command to generate the final configuration and apply it to the cluster.</li>
+  </ul>
+  <p>Example Kustomize command:</p>
+  <pre><code>kustomize build overlays/production | kubectl apply -f -</code></pre>
+</div>
+<div class="container">
+  <h2 id="chapter6" class="chapter-title">Chapter 15: Observability and Monitoring</h2>
+  
+  <h3>Logging and Metrics Collection</h3>
+  <p>Effective monitoring begins with collecting logs and metrics.</p>
+  <ul>
+      <li><strong>Logs:</strong> Logs provide a detailed history of what happens inside containers, applications, or system components. Kubernetes captures logs using the container runtime (e.g., Docker, containerd). Centralized logging systems like ELK (Elasticsearch, Logstash, Kibana), Fluentd, or Splunk can be used for log management.</li>
+      <li><strong>Metrics:</strong> Metrics quantify the health and performance of the system. Kubernetes exposes system-level metrics via the Kubelet, and tools like Prometheus can collect these metrics for monitoring and alerting purposes.</li>
+  </ul>
+
+  <h3>Using Prometheus and Grafana for Monitoring</h3>
+  <p>Prometheus and Grafana form a powerful stack for monitoring and visualizing Kubernetes clusters.</p>
+  <h4>Prometheus</h4>
+  <ul>
+      <li>Prometheus collects time-series data using a pull model, scraping endpoints exposed by Kubernetes components.</li>
+      <li>It stores metrics data and uses PromQL (Prometheus Query Language) to query and aggregate metrics.</li>
+      <li>Prometheus integrates with Kubernetes via the Prometheus Operator, which automates the setup and management of Prometheus instances.</li>
+  </ul>
+
+  <h4>Grafana</h4>
+  <ul>
+      <li>Grafana is used for visualizing the metrics collected by Prometheus. It provides interactive dashboards with charts, graphs, and alerts.</li>
+      <li>Grafana can connect to Prometheus and other data sources to create custom dashboards for monitoring CPU, memory, and application-specific metrics.</li>
+  </ul>
+  <p><strong>Integration Steps:</strong></p>
+  <ol>
+      <li>Install Prometheus via Helm or Kubernetes manifests.</li>
+      <li>Install Grafana and configure it to use Prometheus as a data source.</li>
+      <li>Create dashboards and configure alerts for system metrics.</li>
+  </ol>
+
+  <h3>Debugging and Troubleshooting</h3>
+  <p>When issues arise, Kubernetes provides several tools for debugging and troubleshooting.</p>
+  <ul>
+      <li><strong>`kubectl logs`:</strong> Use this command to view logs from a specific pod or container. It's essential for diagnosing errors or checking for issues like crashes and timeouts.</li>
+      <li><strong>`kubectl describe`:</strong> This command gives detailed information about Kubernetes resources (pods, services, etc.), including events and error messages that can help pinpoint problems.</li>
+      <li><strong>`kubectl exec`:</strong> Use this command to execute commands inside a container. It's useful for inspecting the container's state, environment, or testing network connectivity.</li>
+      <li><strong>Kubernetes Events:</strong> Use `kubectl get events` to view significant events, such as pod creation, deletions, or failures, which help in troubleshooting issues.</li>
+  </ul>
+</div>
+<div class="container">
+  <h2 id="chapter6" class="chapter-title">Chapter 16: Kubernetes in Production</h2>
+
+  <h3>High Availability and Disaster Recovery</h3>
+  <p>Ensuring that your applications remain highly available is critical for production environments. Follow these strategies to design your Kubernetes cluster for high availability:</p>
+  <ul>
+      <li><strong>Cluster Redundancy:</strong> Deploy multiple control plane nodes and worker nodes to prevent single points of failure.</li>
+      <li><strong>Multi-Zone Deployments:</strong> Use Kubernetes' support for deploying nodes across multiple availability zones to improve resilience against zone-specific outages.</li>
+      <li><strong>Backups:</strong> Regularly back up critical cluster data, including etcd, and validate the backups to ensure they can be restored in case of a failure.</li>
+      <li><strong>Disaster Recovery Plans:</strong> Test disaster recovery procedures regularly to ensure you can restore operations quickly after a catastrophic failure.</li>
+      <li><strong>Auto-Healing:</strong> Configure health probes (liveness and readiness checks) and enable auto-scaling to ensure the application can recover from transient issues.</li>
+  </ul>
+
+  <h3>Cost Optimization</h3>
+  <p>Running Kubernetes in production can be expensive if not managed carefully. Implement these strategies to optimize costs:</p>
+  <ul>
+      <li><strong>Monitor Resource Usage:</strong> Use the Kubernetes Metrics Server, Prometheus, and Grafana to monitor resource usage across the cluster.</li>
+      <li><strong>Adjust Resource Requests and Limits:</strong> Define appropriate resource requests and limits for your containers to avoid over-provisioning or under-utilization of resources.</li>
+      <li><strong>Use Node Auto-Scaling:</strong> Enable cluster auto-scaling to automatically adjust the number of nodes based on workload demand, reducing idle resources.</li>
+      <li><strong>Spot Instances:</strong> For non-critical workloads, use cloud provider-specific cost-saving options like AWS Spot Instances or GCP Preemptible VMs.</li>
+      <li><strong>Optimized Scheduling:</strong> Use taints, tolerations, and node selectors to ensure critical workloads are scheduled on high-performance nodes while cost-sensitive workloads run on cheaper nodes.</li>
+      <li><strong>Namespace-Level Resource Quotas:</strong> Enforce resource quotas at the namespace level to prevent overuse by individual teams or applications.</li>
+      <li><strong>Pod Horizontal Pod Autoscaler (HPA):</strong> Dynamically scale workloads based on CPU, memory, or custom metrics to align resource usage with demand.</li>
+  </ul>
+</div>
+
+<footer>
+    <p>&copy; 2024 Vaibhav Upare. All Rights Reserved.</p>
+</footer>
+</body>
+</html>
+
