@@ -1,0 +1,40 @@
+name: Run Apache Server
+
+# Trigger the workflow when a push is made to the 'main' branch or a pull request is created
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  run-apache:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the code from the repository
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Step 2: Install Apache
+    - name: Install Apache Server
+      run: |
+        sudo apt-get update
+        sudo apt-get install apache2 -y
+
+    # Step 3: Deploy your website files to the Apache directory
+    - name: List repository files
+      run: ls -la 
+    - name: Deploy website
+      run: |
+       sudo cp -r ./index.html /var/www/html/
+
+    # Step 4: Start Apache server and verify it's running
+    - name: Start Apache server
+      run: |
+        sudo systemctl start apache2
+        sudo systemctl status apache2
+
+    # Step 5: Optional - Test the server
+    - name: Test Apache server
+      run: curl http://localhost
